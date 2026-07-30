@@ -1,0 +1,3 @@
+Contact: https://www.newwavebarber.com.br/contato
+Expires: 2027-07-30T23:59:59.000Z
+Preferred-Languages: pt-BR

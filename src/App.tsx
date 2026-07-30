@@ -7,16 +7,21 @@
  * - Integrar roteamento, tema e experiência global.
  * - Controlar tela de carregamento inicial.
  * - Aplicar scroll suave via Lenis.
+ * - Gerenciar meta tags globais com react-helmet-async.
  *
  * Dependências:
  * - react-router-dom
  * - framer-motion
+ * - react-helmet-async
  * - lucide-react
  */
 
 import { BrowserRouter as Router } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 import LoadingScreen from '@/components/LoadingScreen'
 import { useLenis } from '@/hooks/useLenis'
+import SEOHead from '@/components/SEOHead'
+import JsonLd from '@/components/JsonLd'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
@@ -33,7 +38,9 @@ function AppContent() {
   useLenis()
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEOHead />
+      <JsonLd />
       <Navbar />
       <main>
         <Hero />
@@ -47,16 +54,20 @@ function AppContent() {
         <CTA />
       </main>
       <Footer />
-    </div>
+    </>
   )
 }
 
 function App() {
   return (
-    <Router>
-      <LoadingScreen />
-      <AppContent />
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <LoadingScreen />
+        <div className="min-h-screen bg-black text-white">
+          <AppContent />
+        </div>
+      </Router>
+    </HelmetProvider>
   )
 }
 
