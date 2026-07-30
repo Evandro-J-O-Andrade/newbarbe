@@ -18,6 +18,11 @@ import { Scissors, Instagram, Facebook, MessageCircle, MapPin, Phone } from 'luc
 const footerLinks = {
   servicos: ['Corte Masculino', 'Barba', 'Hidratação', 'Pigmentação', 'Sobrancelha', 'Combo'],
   institucional: ['Sobre', 'Equipe', 'Galeria', 'Preços', 'Contato'],
+  acesso: [
+    { label: 'Área do Cliente', href: '/login' },
+    { label: 'Área do Barbeiro', href: '/login' },
+    { label: 'Painel Administrativo', href: '/login' },
+  ],
 }
 
 export default function Footer() {
@@ -68,6 +73,19 @@ export default function Footer() {
                 <li key={link}>
                   <a href={`#${link.toLowerCase()}`} className="text-gray-400 hover:text-amber-500 transition-colors">
                     {link}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-white font-semibold mb-6">Acesso</h3>
+            <ul className="space-y-3">
+              {footerLinks.acesso.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} className="text-gray-400 hover:text-amber-500 transition-colors">
+                    {link.label}
                   </a>
                 </li>
               ))}

@@ -15,6 +15,7 @@ import AdminClientsPage from '@/features/admin/pages/AdminClientsPage'
 import BarberDashboardPage from '@/features/barber/pages/BarberDashboardPage'
 import ClientDashboardPage from '@/features/client/pages/ClientDashboardPage'
 import LoginPage from '@/features/auth/pages/LoginPage'
+import RegisterPage from '@/features/auth/pages/RegisterPage'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
@@ -163,6 +164,7 @@ function App() {
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/agendamento" element={<AppointmentPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/cadastro" element={<RegisterPage />} />
                 <Route
                   path="/admin"
                   element={

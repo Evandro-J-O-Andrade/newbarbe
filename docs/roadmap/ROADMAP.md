@@ -31,7 +31,13 @@ O projeto evolui em três módulos principais:
 | Código | Status | Entregas |
 | ------ | ------ | -------- |
 | NWB-M6 | Concluída | Dashboard administrativo, shell admin, CRUD barbeiros, responsive foundation, preview mock, demo flow, premium motion |
-| NWB-M7 | Planejada | Portal do barbeiro |
-| NWB-M8 | Planejada | Portal do cliente |
+| NWB-M6.2 | Concluída | Product Preview Mock |
+| NWB-M6.2.2 | Concluída | Páginas mockadas navegáveis |
+| NWB-M6.2.3 | Concluída | Demo Flow com mock store compartilhada |
+| NWB-M6.2.4 | Concluída | Premium Motion Layer |
+| NWB-M6.2.5 | Concluída | Demo Access & Route Validation |
+| NWB-M6.3 | Concluída | Access & Customer Flow |
+| NWB-M7 | Planejada | Banco Real Supabase |
+| NWB-M8 | Planejada | Portal do cliente completo |
 | NWB-M9 | Planejada | Financeiro, caixa, relatórios |
 | NWB-M10 | Planejada | Evolução para SaaS multi-tenant |

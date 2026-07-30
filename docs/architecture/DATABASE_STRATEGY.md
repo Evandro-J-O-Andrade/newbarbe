@@ -11,6 +11,34 @@ O New Wave Barber utiliza Supabase como banco do produto na V1. Ele não é o ba
 - Multi-tenant desde a primeira tabela via `empresa_id`.
 - Nomes e entidades alinhados ao domínio de barbearia.
 - Estrutura preparada para migração futura para Kernel Enterprise.
+- Separação clara entre Booking (agenda) e Commerce (produtos).
+
+## Modelo de negócio V1
+
+### Jornadas
+
+1. **Agendamento de serviço**
+   - Cliente escolhe serviço, barbeiro, horário e confirma.
+   - Resultado: `agendamento`.
+
+2. **Compra de produtos**
+   - Cliente adiciona itens ao carrinho e finaliza pedido.
+   - Resultado: `pedido` + `pedido_item`.
+
+3. **Serviço + Produto**
+   - Cliente agenda serviço e pode adicionar produtos no mesmo atendimento.
+   - Internamente: `agendamento` + `venda` separados.
+
+### Usuários
+
+- `ADMIN`: dono/gestor da barbearia.
+- `BARBEIRO`: profissional, podendo ser `INTERNO` ou `FREELANCER`.
+- `CLIENTE`: cliente final.
+
+### Barbeiro
+
+- `INTERNO`: funcionário da barbearia.
+- `FREELANCER`: parceiro independente que usa a estrutura da barbearia.
 
 ## Modelo inicial
 
@@ -37,6 +65,7 @@ created_at
 
 ```sql
 id
+empresa_id
 nome
 email
 senha_hash
@@ -51,6 +80,7 @@ Tipos: `ADMIN`, `BARBEIRO`, `CLIENTE`.
 
 ```sql
 id
+empresa_id
 usuario_id
 nome
 telefone
@@ -64,13 +94,16 @@ created_at
 
 ```sql
 id
+empresa_id
 usuario_id
 nome
 foto
 descricao
 especialidade
 tipo
+comissao
 ativo
+created_at
 ```
 
 Tipo: `INTERNO`, `FREELANCER`.
@@ -79,28 +112,34 @@ Tipo: `INTERNO`, `FREELANCER`.
 
 ```sql
 id
+empresa_id
 numero
 nome
 status
 ativo
+created_at
 ```
+
+Status: `LIVRE`, `OCUPADA`, `MANUTENCAO`.
 
 ### servico
 
 ```sql
 id
+empresa_id
 nome
 descricao
-duracao
+duracao_minutos
 valor
-imagem
 ativo
+created_at
 ```
 
 ### agendamento
 
 ```sql
 id
+empresa_id
 cliente_id
 barbeiro_id
 servico_id
@@ -120,49 +159,57 @@ Status: `PENDENTE`, `CONFIRMADO`, `EM_ATENDIMENTO`, `FINALIZADO`, `CANCELADO`.
 
 ```sql
 id
+empresa_id
 nome
 categoria
 preco
 estoque
 imagem
 ativo
+created_at
 ```
 
-### venda
+### pedido
 
 ```sql
 id
+empresa_id
 cliente_id
 valor_total
 forma_pagamento
 data
+created_at
 ```
 
-### venda_item
+### pedido_item
 
 ```sql
 id
-venda_id
+pedido_id
 produto_id
 quantidade
 valor
+created_at
 ```
 
 ### avaliacao
 
 ```sql
 id
+empresa_id
 cliente_id
 barbeiro_id
 nota
 comentario
 data
+created_at
 ```
 
 ### notificacao
 
 ```sql
 id
+empresa_id
 usuario_id
 tipo
 mensagem
@@ -174,10 +221,24 @@ created_at
 
 ```sql
 id
+empresa_id
 horario_abertura
 horario_fechamento
 intervalo_agendamento
 antecedencia_minima
+created_at
+```
+
+## Arquitetura futura
+
+```text
+NWB Barber
+├── Website
+├── Booking (agenda)
+├── Commerce (produtos)
+├── CRM Cliente
+├── Admin
+└── Workforce (barbeiros/cadeiras)
 ```
 
 ## Futuro
@@ -185,3 +246,5 @@ antecedencia_minima
 - Migração para Node.js + API própria.
 - Incorporação ao ecossistema New Wave pelo Kernel.
 - Módulos adicionais: financeiro, estoque, fidelidade.
+- Integração com Google Calendar e Microsoft Outlook.
+- Multi-tenant explícito via `empresa_id`.
