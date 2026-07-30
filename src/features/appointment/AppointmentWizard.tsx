@@ -24,11 +24,12 @@
  * - react-hook-form
  */
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, ArrowRight, Check, MessageCircle } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Check, MessageCircle, Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
-import { services, professionals, generateTimeSlots } from '@/data/appointment'
+import { fetchServices, fetchProfessionals, fetchTimeSlots } from '@/services/appointment'
+import { services as mockServices, professionals as mockProfessionals, generateTimeSlots } from '@/data/appointment'
 import { env } from '@/config/env'
 import { generateWhatsAppLink, formatCurrency, formatDate } from '@/utils/index'
 import type { Service, Professional, PaymentMethod } from '@/types/appointment'
@@ -70,18 +71,62 @@ export default function AppointmentWizard() {
   const [hasCompanion, setHasCompanion] = useState(false)
   const [isFirstTime, setIsFirstTime] = useState(false)
   const [slots, setSlots] = useState<{ [key: string]: { time: string; available: boolean }[] }>({})
+  const [services, setServices] = useState<Service[]>([])
+  const [professionals, setProfessionals] = useState<Professional[]>([])
+  const [loading, setLoading] = useState(true)
   const stepIndex = steps.findIndex((s) => s.key === step)
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
 
   const availableDates = Object.keys(slots).filter((date) => slots[date].some((slot) => slot.available))
 
-  const loadSlots = (date: string) => {
-    if (!slots[date]) {
-      setSlots(generateTimeSlots())
+  useEffect(() => {
+    let cancelled = false
+
+    async function loadInitialData() {
+      setLoading(true)
+      try {
+        const [servicesData, professionalsData] = await Promise.all([
+          fetchServices().catch(() => mockServices),
+          fetchProfessionals().catch(() => mockProfessionals),
+        ])
+
+        if (!cancelled) {
+          setServices(servicesData)
+          setProfessionals(professionalsData)
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false)
+        }
+      }
     }
-    setSelectedDate(date)
-    setSelectedTime('')
+
+    loadInitialData()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const loadSlots = async (date: string) => {
+    setLoading(true)
+    try {
+      if (selectedProfessional) {
+        const remoteSlots = await fetchTimeSlots(selectedProfessional.id, date)
+        setSlots((prev) => ({ ...prev, [date]: remoteSlots }))
+      } else {
+        const localSlots = generateTimeSlots()
+        setSlots((prev) => ({ ...prev, [date]: localSlots[date] || [] }))
+      }
+    } catch {
+      const localSlots = generateTimeSlots()
+      setSlots((prev) => ({ ...prev, [date]: localSlots[date] || [] }))
+    } finally {
+      setSelectedDate(date)
+      setSelectedTime('')
+      setLoading(false)
+    }
   }
 
   const canGoNext = () => {
@@ -124,6 +169,16 @@ export default function AppointmentWizard() {
     const message = `Olá! Gostaria de confirmar um agendamento:\n\n*Profissional:* ${selectedProfessional!.name}\n*Serviço:* ${selectedService!.name}\n*Data:* ${formatDate(selectedDate)}\n*Horário:* ${selectedTime}\n*Pagamento:* ${paymentMethod}\n*Nome:* ${data.clientName}\n*Telefone:* ${data.clientPhone}\n${hasCompanion ? '*Acompanhante:* Sim\n' : ''}${isFirstTime ? '*Primeira vez:* Sim\n' : ''}${data.note ? `*Obs:* ${data.note}` : ''}`
     const whatsappUrl = generateWhatsAppLink(env.whatsappNumber, message)
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
+  }
+
+  if (loading && step === 'professional') {
+    return (
+      <section id="agendamento" className="py-24 bg-black">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+          <Loader2 className="w-8 h-8 text-amber-500 animate-spin" />
+        </div>
+      </section>
+    )
   }
 
   return (

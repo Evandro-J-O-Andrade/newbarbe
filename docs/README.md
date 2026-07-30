@@ -23,6 +23,12 @@
 - `src/lib/` — utilitários
 - `src/services/` — clientes HTTP e integrações
 - `src/types/` — tipos TypeScript
+- `src/data/` — dados mockados e fixtures para V1
+- `src/config/` — configurações globais e variáveis de ambiente
+- `src/constants/` — constantes reutilizáveis
+- `src/utils/` — utilitários diversos
+- `src/features/` — módulos: appointment, admin, client-portal, gallery, hero, services, professionals, contact
+- `supabase/` — migrations, seed e configuração do banco
 - `docs/` — documentação técnica oficial
 
 ## Milestones

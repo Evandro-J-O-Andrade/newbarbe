@@ -21,8 +21,9 @@ O projeto evolui em três módulos principais:
 | Código | Status | Entregas |
 | ------ | ------ | -------- |
 | NWB-M3.1 | Concluída | Estrutura do produto, features, tipos, dados mockados |
-| NWB-M4 | Em desenvolvimento | Wizard de agendamento, confirmação, canais |
-| NWB-M5 | Planejada | Banco Supabase, persistência, autenticação |
+| NWB-M4 | Concluída | Wizard de agendamento, confirmação, canais |
+| NWB-M4.1 | Concluída | Contratos, modelo de dados, preparação SaaS |
+| NWB-M5 | Em desenvolvimento | Banco Supabase, persistência, autenticação |
 | NWB-M6 | Planejada | Dashboard administrativo |
 | NWB-M7 | Planejada | Painel do barbeiro |
 | NWB-M8 | Planejada | Painel do cliente |
