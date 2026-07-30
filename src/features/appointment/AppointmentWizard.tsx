@@ -32,6 +32,7 @@ import { fetchServices, fetchProfessionals, fetchTimeSlots } from '@/services/ap
 import { services as mockServices, professionals as mockProfessionals, generateTimeSlots } from '@/data/appointment'
 import { env } from '@/config/env'
 import { generateWhatsAppLink, formatCurrency, formatDate } from '@/utils/index'
+import { addAppointment } from '@/data/appointments'
 import type { Service, Professional, PaymentMethod } from '@/types/appointment'
 
 type Step = 'professional' | 'service' | 'date' | 'time' | 'payment' | 'companion' | 'firstTime' | 'client' | 'summary'
@@ -166,6 +167,16 @@ export default function AppointmentWizard() {
   }
 
   const onSubmit = (data: FormData) => {
+    const appointment = {
+      clientName: data.clientName,
+      professionalName: selectedProfessional!.name,
+      serviceName: selectedService!.name,
+      date: formatDate(selectedDate),
+      time: selectedTime,
+      paymentMethod: paymentMethod!,
+      chair: 'Cadeira 02',
+    }
+    addAppointment(appointment)
     const message = `Olá! Gostaria de confirmar um agendamento:\n\n*Profissional:* ${selectedProfessional!.name}\n*Serviço:* ${selectedService!.name}\n*Data:* ${formatDate(selectedDate)}\n*Horário:* ${selectedTime}\n*Pagamento:* ${paymentMethod}\n*Nome:* ${data.clientName}\n*Telefone:* ${data.clientPhone}\n${hasCompanion ? '*Acompanhante:* Sim\n' : ''}${isFirstTime ? '*Primeira vez:* Sim\n' : ''}${data.note ? `*Obs:* ${data.note}` : ''}`
     const whatsappUrl = generateWhatsAppLink(env.whatsappNumber, message)
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')

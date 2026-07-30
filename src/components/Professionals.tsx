@@ -20,19 +20,22 @@ const professionals = [
   {
     name: 'João Silva',
     specialty: 'Cortes Modernos',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
+    experience: '8 anos de experiência',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&crop=face',
     instagram: '@joao.silva',
   },
   {
     name: 'Pedro Costa',
     specialty: 'Barba e Pigmentação',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face',
+    experience: '12 anos de experiência',
+    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=800&fit=crop&crop=face',
     instagram: '@pedro.costa',
   },
   {
     name: 'Lucas Oliveira',
     specialty: 'Cortes Clássicos',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
+    experience: '10 anos de experiência',
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=800&fit=crop&crop=face',
     instagram: '@lucas.oliveira',
   },
 ]
@@ -66,7 +69,7 @@ export default function Professionals() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
+              whileHover={{ y: -10 }}
               className="group relative overflow-hidden rounded-xl bg-gray-800"
             >
               <div className="aspect-[3/4] overflow-hidden">
@@ -79,7 +82,8 @@ export default function Professionals() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
                 <h3 className="text-xl font-bold text-white">{person.name}</h3>
-                <p className="text-amber-500 mb-4">{person.specialty}</p>
+                <p className="text-amber-500 mb-1">{person.specialty}</p>
+                <p className="text-gray-300 text-sm mb-4">{person.experience}</p>
                 <div className="flex gap-4">
                   <a href="#" className="text-white hover:text-amber-500 transition-colors">
                     <Instagram className="w-5 h-5" />

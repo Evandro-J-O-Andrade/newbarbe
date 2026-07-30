@@ -1,22 +1,3 @@
-/**
- * App
- *
- * Composição principal da aplicação.
- *
- * Responsabilidades:
- * - Integrar roteamento, tema e experiência global.
- * - Controlar tela de carregamento inicial.
- * - Aplicar scroll suave via Lenis.
- * - Gerenciar meta tags globais com react-helmet-async.
- * - Capturar erros de renderização com ErrorBoundary.
- *
- * Dependências:
- * - react-router-dom
- * - framer-motion
- * - react-helmet-async
- * - lucide-react
- */
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import LoadingScreen from '@/components/LoadingScreen'
@@ -28,13 +9,19 @@ import { env } from '@/config/env'
 import AppointmentWizard from '@/features/appointment/AppointmentWizard'
 import AdminLayout from '@/features/admin/layout/AdminLayout'
 import DashboardPage from '@/features/admin/dashboard/DashboardPage'
-import AdminBarbersPage from '@/features/admin/barbers/BarbersPage'
+import AdminBarbersPage from '@/features/admin/pages/AdminBarbersPage'
+import AdminServicesPage from '@/features/admin/pages/AdminServicesPage'
+import AdminClientsPage from '@/features/admin/pages/AdminClientsPage'
+import BarberDashboardPage from '@/features/barber/pages/BarberDashboardPage'
+import ClientDashboardPage from '@/features/client/pages/ClientDashboardPage'
+import LoginPage from '@/features/auth/pages/LoginPage'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
 import Services from '@/components/Services'
 import Professionals from '@/components/Professionals'
 import Gallery from '@/components/Gallery'
+import SocialHub from '@/components/SocialHub'
 import Testimonials from '@/components/Testimonials'
 import Pricing from '@/components/Pricing'
 import Contact from '@/components/Contact'
@@ -59,6 +46,7 @@ function LandingPage() {
         <Services />
         <Professionals />
         <Gallery />
+        <SocialHub />
         <Testimonials />
         <Pricing />
         <Contact />
@@ -111,6 +99,58 @@ function AdminBarbers() {
   )
 }
 
+function AdminServices() {
+  useLenis()
+
+  return (
+    <>
+      <SEOHead title="Serviços" description="Gerenciamento de serviços." canonical={env.siteUrl + '/admin/servicos'} noindex />
+      <AdminLayout>
+        <AdminServicesPage />
+      </AdminLayout>
+    </>
+  )
+}
+
+function AdminClients() {
+  useLenis()
+
+  return (
+    <>
+      <SEOHead title="Clientes" description="Gerenciamento de clientes." canonical={env.siteUrl + '/admin/clientes'} noindex />
+      <AdminLayout>
+        <AdminClientsPage />
+      </AdminLayout>
+    </>
+  )
+}
+
+function BarberPanel() {
+  useLenis()
+
+  return (
+    <>
+      <SEOHead title="Painel do Barbeiro" description="Agenda e atendimentos." canonical={env.siteUrl + '/barbeiro'} noindex />
+      <AdminLayout>
+        <BarberDashboardPage />
+      </AdminLayout>
+    </>
+  )
+}
+
+function ClientPortal() {
+  useLenis()
+
+  return (
+    <>
+      <SEOHead title="Meus Agendamentos" description="Portal do cliente." canonical={env.siteUrl + '/cliente'} noindex />
+      <AdminLayout>
+        <ClientDashboardPage />
+      </AdminLayout>
+    </>
+  )
+}
+
 function App() {
   return (
     <HelmetProvider>
@@ -122,6 +162,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/agendamento" element={<AppointmentPage />} />
+                <Route path="/login" element={<LoginPage />} />
                 <Route
                   path="/admin"
                   element={
@@ -135,6 +176,38 @@ function App() {
                   element={
                     <ProtectedRoute allowedRoles={['ADMIN']}>
                       <AdminBarbers />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/servicos"
+                  element={
+                    <ProtectedRoute allowedRoles={['ADMIN']}>
+                      <AdminServices />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/clientes"
+                  element={
+                    <ProtectedRoute allowedRoles={['ADMIN']}>
+                      <AdminClients />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/barbeiro"
+                  element={
+                    <ProtectedRoute allowedRoles={['BARBEIRO', 'ADMIN']}>
+                      <BarberPanel />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/cliente"
+                  element={
+                    <ProtectedRoute allowedRoles={['CLIENTE', 'ADMIN']}>
+                      <ClientPortal />
                     </ProtectedRoute>
                   }
                 />

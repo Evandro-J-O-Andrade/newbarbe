@@ -14,27 +14,35 @@
  * - Lucide React
  */
 
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, ChevronDown } from 'lucide-react'
+import BarberPole from './BarberPole'
+
+const titleText = 'Seu estilo começa aqui'
 
 export default function Hero() {
+  const { scrollY } = useScroll()
+  const backgroundY = useTransform(scrollY, [0, 800], [0, 160])
+  const textY = useTransform(scrollY, [0, 600], [0, 80])
+  const opacity = useTransform(scrollY, [0, 500], [1, 0])
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0">
+      <motion.div className="absolute inset-0" style={{ y: backgroundY }}>
         <motion.img
-          initial={{ scale: 1.1 }}
+          initial={{ scale: 1.15 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 1.2, ease: 'easeOut' }}
+          transition={{ duration: 1.4, ease: 'easeOut' }}
           src="https://images.unsplash.com/photo-1503951914875-452162b0203f?w=1920&q=80"
           alt="Barbearia premium"
           loading="eager"
           decoding="async"
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-full object-cover opacity-50"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black" />
-      </div>
+      </motion.div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <motion.div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" style={{ y: textY, opacity }}>
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -49,14 +57,36 @@ export default function Hero() {
           </div>
         </motion.div>
 
+        <div className="flex justify-center mb-6">
+          <BarberPole className="w-16 h-16" />
+        </div>
+
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight leading-[0.95]"
         >
-          Seu estilo <br />
-          <span className="text-amber-500">começa aqui</span>
+          {titleText.split(' ').map((word, index) => (
+            <motion.span
+              key={word}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 + index * 0.15 }}
+              className="inline-block mr-3"
+            >
+              {word}
+            </motion.span>
+          ))}
+          <br />
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+            className="text-amber-500"
+          >
+            começa aqui
+          </motion.span>
         </motion.h1>
 
         <motion.p
@@ -108,7 +138,7 @@ export default function Hero() {
             </motion.div>
           </a>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   )
 }

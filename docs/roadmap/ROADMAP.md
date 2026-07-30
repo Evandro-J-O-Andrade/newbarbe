@@ -30,7 +30,7 @@ O projeto evolui em três módulos principais:
 
 | Código | Status | Entregas |
 | ------ | ------ | -------- |
-| NWB-M6 | Em desenvolvimento | Dashboard administrativo, shell admin, CRUD barbeiros, responsive foundation |
+| NWB-M6 | Concluída | Dashboard administrativo, shell admin, CRUD barbeiros, responsive foundation, preview mock, demo flow, premium motion |
 | NWB-M7 | Planejada | Portal do barbeiro |
 | NWB-M8 | Planejada | Portal do cliente |
 | NWB-M9 | Planejada | Financeiro, caixa, relatórios |

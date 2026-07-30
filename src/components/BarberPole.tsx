@@ -17,19 +17,51 @@ import { motion } from 'framer-motion'
 export default function BarberPole({ className = 'w-12 h-12' }: { className?: string }) {
   return (
     <div className={`relative ${className}`}>
-      <motion.div
-        className="absolute inset-0 rounded-full border-4 border-amber-500/30"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
-      />
-      <motion.div
-        className="absolute inset-1 rounded-full border-4 border-dashed border-amber-500/60"
-        animate={{ rotate: -360 }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
-      />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-2 h-2 bg-amber-500 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.8)]" />
-      </div>
+      <svg viewBox="0 0 100 100" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="poleGradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#F59E0B" />
+            <stop offset="50%" stopColor="#EF4444" />
+            <stop offset="100%" stopColor="#F59E0B" />
+          </linearGradient>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        <motion.rect
+          x="25"
+          y="10"
+          width="50"
+          height="80"
+          rx="14"
+          fill="none"
+          stroke="url(#poleGradient)"
+          strokeWidth="6"
+          filter="url(#glow)"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+          style={{ transformOrigin: '50px 50px' }}
+        />
+        <motion.rect
+          x="35"
+          y="20"
+          width="30"
+          height="60"
+          rx="10"
+          fill="none"
+          stroke="#F59E0B"
+          strokeWidth="2"
+          strokeDasharray="8 6"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+          style={{ transformOrigin: '50px 50px' }}
+        />
+        <circle cx="50" cy="50" r="6" fill="#F59E0B" filter="url(#glow)" />
+      </svg>
     </div>
   )
 }

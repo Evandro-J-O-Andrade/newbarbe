@@ -85,15 +85,18 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="group p-8 bg-gray-900 border border-gray-800 rounded-xl hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300"
+              whileHover={{ y: -10, scale: 1.02, transition: { duration: 0.3 } }}
+              className="group relative p-8 bg-gray-900 border border-gray-800 rounded-xl hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300"
             >
-              <div className="w-14 h-14 flex items-center justify-center bg-amber-500/10 rounded-xl mb-6 group-hover:bg-amber-500/20 transition-colors duration-300">
-                <service.icon className="w-7 h-7 text-amber-500" />
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+              <div className="relative">
+                <div className="w-14 h-14 flex items-center justify-center bg-amber-500/10 rounded-xl mb-6 group-hover:bg-amber-500/20 transition-colors duration-300">
+                  <service.icon className="w-7 h-7 text-amber-500" />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-white">{service.title}</h3>
+                <p className="text-gray-400 mb-6 leading-relaxed">{service.description}</p>
+                <span className="text-2xl font-bold text-amber-500">{service.price}</span>
               </div>
-              <h3 className="text-xl font-bold mb-2 text-white">{service.title}</h3>
-              <p className="text-gray-400 mb-6 leading-relaxed">{service.description}</p>
-              <span className="text-2xl font-bold text-amber-500">{service.price}</span>
             </motion.div>
           ))}
         </div>
