@@ -13,12 +13,14 @@
 - Tailwind CSS v4
 - Framer Motion + GSAP
 - React Router + Lucide React + React Hook Form
+- Lenis + clsx + tailwind-merge
 
 ## Estrutura principal
 
 - `src/components/` — componentes de UI
 - `src/styles/` — tokens e estilos globais
 - `src/hooks/` — hooks reutilizáveis
+- `src/lib/` — utilitários
 - `src/services/` — clientes HTTP e integrações
 - `src/types/` — tipos TypeScript
 - `docs/` — documentação técnica oficial
@@ -26,7 +28,9 @@
 ## Milestones
 
 - **NWB-M1** — Estrutura base e site premium inicial
-- **NWB-M2** — Experiência, UX e SEO prontos para venda
-- **NWB-M3** — Agendamento funcional
-- **NWB-M4** — Backend + banco + painel administrativo
-- **NWB-M5** — Versão SaaS multi-tenant
+- **NWB-M2** — UX & Polish
+- **NWB-M3** — SEO
+- **NWB-M4** — Agendamento WhatsApp
+- **NWB-M5** — Agendamento Online
+- **NWB-M6** — Painel Administrativo
+- **NWB-M7** — Versão SaaS multi-tenant
