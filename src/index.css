@@ -7,6 +7,14 @@
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
 }
 
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -20,4 +28,11 @@ body {
 ::selection {
   background-color: var(--color-amber-500);
   color: #000;
+}
+
+img,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
 }

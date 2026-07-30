@@ -2,15 +2,15 @@
 
 ## Decisão
 
-O New Wave Barber inicia como produto independente, com banco próprio, mas segue os padrões arquiteturais do ecossistema New Wave para permitir futura incorporação como módulo vertical.
+O New Wave Barber utiliza Supabase como banco do produto na V1. Ele não é o banco SaaS Enterprise agora, mas é projetado com estrutura organizada para uma futura migração/evolução para o ecossistema New Wave.
 
 ## Princípios
 
-- Banco próprio para o produto na V1.
-- Nenhuma tabela do HIS/MIDAS é compartilhada diretamente.
-- Mesma filosofia do banco canônico: `empresa_id`, `usuario`, permissões, auditoria.
-- Preparado para multi-tenant desde a primeira tabela.
-- Futura consolidação pelo Kernel, sem reescrita completa.
+- Banco próprio e completo para o produto atual.
+- Nada do HIS/MIDAS é compartilhado diretamente.
+- Multi-tenant desde a primeira tabela via `empresa_id`.
+- Nomes e entidades alinhados ao domínio de barbearia.
+- Estrutura preparada para migração futura para Kernel Enterprise.
 
 ## Modelo inicial
 
@@ -23,10 +23,12 @@ slug
 logo
 telefone
 whatsapp
+email
+endereco
 instagram
 facebook
 tiktok
-endereco
+horario_funcionamento
 ativo
 created_at
 ```
@@ -35,7 +37,6 @@ created_at
 
 ```sql
 id
-empresa_id
 nome
 email
 senha_hash
@@ -46,17 +47,29 @@ created_at
 
 Tipos: `ADMIN`, `BARBEIRO`, `CLIENTE`.
 
+### cliente
+
+```sql
+id
+usuario_id
+nome
+telefone
+email
+data_nascimento
+observacao
+created_at
+```
+
 ### barbeiro
 
 ```sql
 id
-empresa_id
 usuario_id
 nome
 foto
-tipo
+descricao
 especialidade
-comissao
+tipo
 ativo
 ```
 
@@ -66,43 +79,28 @@ Tipo: `INTERNO`, `FREELANCER`.
 
 ```sql
 id
-empresa_id
 numero
+nome
 status
+ativo
 ```
-
-Status: `LIVRE`, `OCUPADA`, `MANUTENCAO`.
 
 ### servico
 
 ```sql
 id
-empresa_id
 nome
 descricao
-duracao_minutos
+duracao
 valor
+imagem
 ativo
-```
-
-### cliente
-
-```sql
-id
-empresa_id
-nome
-telefone
-email
-data_nascimento
-observacao
-created_at
 ```
 
 ### agendamento
 
 ```sql
 id
-empresa_id
 cliente_id
 barbeiro_id
 servico_id
@@ -118,12 +116,69 @@ created_at
 
 Status: `PENDENTE`, `CONFIRMADO`, `EM_ATENDIMENTO`, `FINALIZADO`, `CANCELADO`.
 
-## Regras principais
+### produto
 
-- Cliente agenda profissional, não cadeira.
-- Cadeira é atribuída pelo sistema/admin.
-- Nenhum conflito de horário para o mesmo barbeiro.
-- Toda entidade relevante carrega `empresa_id`.
+```sql
+id
+nome
+categoria
+preco
+estoque
+imagem
+ativo
+```
+
+### venda
+
+```sql
+id
+cliente_id
+valor_total
+forma_pagamento
+data
+```
+
+### venda_item
+
+```sql
+id
+venda_id
+produto_id
+quantidade
+valor
+```
+
+### avaliacao
+
+```sql
+id
+cliente_id
+barbeiro_id
+nota
+comentario
+data
+```
+
+### notificacao
+
+```sql
+id
+usuario_id
+tipo
+mensagem
+status
+created_at
+```
+
+### configuracao
+
+```sql
+id
+horario_abertura
+horario_fechamento
+intervalo_agendamento
+antecedencia_minima
+```
 
 ## Futuro
 
