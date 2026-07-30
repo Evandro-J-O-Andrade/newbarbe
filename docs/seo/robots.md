@@ -10,7 +10,7 @@ Allow: /
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /api/
-Sitemap: https://www.newwavebarber.com.br/sitemap.xml
+Sitemap: https://newbarbestudio.netlify.app/sitemap.xml
 ```
 
 ## Desenvolvimento

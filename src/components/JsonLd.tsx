@@ -18,7 +18,7 @@ const schema = {
   '@type': 'Barbershop',
   name: 'New Wave Barber',
   description: 'Experiência premium em cortes masculinos.',
-  url: 'https://www.newwavebarber.com.br',
+  url: 'https://newbarbestudio.netlify.app',
   telephone: '+55-11-99999-9999',
   address: {
     '@type': 'PostalAddress',

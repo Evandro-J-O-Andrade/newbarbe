@@ -1,6 +1,6 @@
 # sitemap.xml
 
-Gerado automaticamente durante o build por `vite-plugin-sitemap`.
+Gerado a partir de `public/sitemap.xml` e mantido manualmente sincronizado com as rotas públicas.
 
 Rotas mapeadas:
 
@@ -12,8 +12,8 @@ Rotas mapeadas:
 - `/agendamento`
 - `/contato`
 
-Configuração centralizada em `vite.config.ts`.
+Configuração centralizada em `public/sitemap.xml`.
 
 ## Manutenção
 
-Sempre que adicionar uma rota pública, atualize a lista em `vite.config.ts`.
+Sempre que adicionar uma rota pública, atualize `public/sitemap.xml`.

@@ -17,6 +17,7 @@ Tags aplicadas:
 Tamanho recomendado: 1200x630px.
 Formato: JPG ou PNG.
 Caminho atual: `/og-image.jpg`.
+Domínio base: `https://newbarbestudio.netlify.app`.
 
 ## Manutenção
 

@@ -26,7 +26,7 @@ interface SEOHeadProps {
   noindex?: boolean
 }
 
-const SITE_URL = 'https://www.newwavebarber.com.br'
+const SITE_URL = 'https://newbarbestudio.netlify.app'
 
 export default function SEOHead({
   title = 'New Wave Barber — Cortes Masculinos Premium',
