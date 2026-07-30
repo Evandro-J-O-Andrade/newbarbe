@@ -6,6 +6,8 @@
  * - Servir de base tanto para dados mockados quanto para integração futura com backend.
  */
 
+export type PaymentMethod = 'pix' | 'cash' | 'credit' | 'debit'
+
 export interface Service {
   id: string
   name: string
@@ -34,5 +36,8 @@ export interface AppointmentPayload {
   time: string
   clientName: string
   clientPhone: string
+  paymentMethod: PaymentMethod
+  hasCompanion: boolean
+  isFirstTime: boolean
   note?: string
 }

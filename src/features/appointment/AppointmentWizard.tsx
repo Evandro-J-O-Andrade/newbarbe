@@ -1,13 +1,16 @@
 /**
  * AppointmentWizard
  *
- * Fluxo guiado de agendamento em 5 etapas:
- * 1. Serviço
- * 2. Profissional
+ * Fluxo guiado de agendamento:
+ * 1. Profissional
+ * 2. Serviço
  * 3. Data
  * 4. Horário
- * 5. Dados do cliente
- * 6. Resumo
+ * 5. Pagamento
+ * 6. Acompanhante
+ * 7. Primeira vez
+ * 8. Dados do cliente
+ * 9. Resumo
  *
  * Responsabilidades:
  * - Guiar o usuário pelo agendamento.
@@ -27,10 +30,10 @@ import { ArrowLeft, ArrowRight, Check, MessageCircle } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { services, professionals, generateTimeSlots } from '@/data/appointment'
 import { env } from '@/config/env'
-import { generateWhatsAppLink } from '@/utils/index'
-import type { Service, Professional } from '@/types/appointment'
+import { generateWhatsAppLink, formatCurrency, formatDate } from '@/utils/index'
+import type { Service, Professional, PaymentMethod } from '@/types/appointment'
 
-type Step = 'service' | 'professional' | 'date' | 'time' | 'client' | 'summary'
+type Step = 'professional' | 'service' | 'date' | 'time' | 'payment' | 'companion' | 'firstTime' | 'client' | 'summary'
 
 interface FormData {
   clientName: string
@@ -39,20 +42,33 @@ interface FormData {
 }
 
 const steps: { key: Step; label: string }[] = [
-  { key: 'service', label: 'Serviço' },
   { key: 'professional', label: 'Profissional' },
+  { key: 'service', label: 'Serviço' },
   { key: 'date', label: 'Data' },
   { key: 'time', label: 'Horário' },
+  { key: 'payment', label: 'Pagamento' },
+  { key: 'companion', label: 'Acompanhante' },
+  { key: 'firstTime', label: 'Primeira vez' },
   { key: 'client', label: 'Cliente' },
   { key: 'summary', label: 'Resumo' },
 ]
 
+const paymentMethods: { value: PaymentMethod; label: string }[] = [
+  { value: 'pix', label: 'Pix' },
+  { value: 'cash', label: 'Dinheiro' },
+  { value: 'credit', label: 'Cartão de Crédito' },
+  { value: 'debit', label: 'Cartão de Débito' },
+]
+
 export default function AppointmentWizard() {
-  const [step, setStep] = useState<Step>('service')
-  const [selectedService, setSelectedService] = useState<Service | null>(null)
+  const [step, setStep] = useState<Step>('professional')
   const [selectedProfessional, setSelectedProfessional] = useState<Professional | null>(null)
+  const [selectedService, setSelectedService] = useState<Service | null>(null)
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null)
+  const [hasCompanion, setHasCompanion] = useState(false)
+  const [isFirstTime, setIsFirstTime] = useState(false)
   const [slots, setSlots] = useState<{ [key: string]: { time: string; available: boolean }[] }>({})
   const stepIndex = steps.findIndex((s) => s.key === step)
 
@@ -70,14 +86,20 @@ export default function AppointmentWizard() {
 
   const canGoNext = () => {
     switch (step) {
-      case 'service':
-        return !!selectedService
       case 'professional':
         return !!selectedProfessional
+      case 'service':
+        return !!selectedService
       case 'date':
         return !!selectedDate
       case 'time':
         return !!selectedTime
+      case 'payment':
+        return !!paymentMethod
+      case 'companion':
+        return true
+      case 'firstTime':
+        return true
       case 'client':
         return true
       default:
@@ -99,7 +121,7 @@ export default function AppointmentWizard() {
   }
 
   const onSubmit = (data: FormData) => {
-    const message = `Olá! Gostaria de agendar:\n\n*Serviço:* ${selectedService!.name}\n*Profissional:* ${selectedProfessional!.name}\n*Data:* ${selectedDate}\n*Horário:* ${selectedTime}\n*Nome:* ${data.clientName}\n*Telefone:* ${data.clientPhone}${data.note ? `\n*Obs:* ${data.note}` : ''}`
+    const message = `Olá! Gostaria de confirmar um agendamento:\n\n*Profissional:* ${selectedProfessional!.name}\n*Serviço:* ${selectedService!.name}\n*Data:* ${formatDate(selectedDate)}\n*Horário:* ${selectedTime}\n*Pagamento:* ${paymentMethod}\n*Nome:* ${data.clientName}\n*Telefone:* ${data.clientPhone}\n${hasCompanion ? '*Acompanhante:* Sim\n' : ''}${isFirstTime ? '*Primeira vez:* Sim\n' : ''}${data.note ? `*Obs:* ${data.note}` : ''}`
     const whatsappUrl = generateWhatsAppLink(env.whatsappNumber, message)
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
   }
@@ -118,17 +140,17 @@ export default function AppointmentWizard() {
           <p className="text-gray-400 text-lg">Siga os passos abaixo e confirme pelo WhatsApp.</p>
         </motion.div>
 
-        <div className="flex items-center justify-between mb-10">
+        <div className="flex items-center justify-between mb-10 overflow-x-auto pb-2">
           {steps.map((s, idx) => (
             <div key={s.key} className="flex items-center gap-2">
               <div
-                className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold border ${
+                className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold border shrink-0 ${
                   idx <= stepIndex ? 'bg-amber-500 border-amber-500 text-black' : 'border-gray-700 text-gray-500'
                 }`}
               >
                 {idx < stepIndex ? <Check className="w-4 h-4" /> : idx + 1}
               </div>
-              <span className={`hidden sm:block text-sm ${idx <= stepIndex ? 'text-white' : 'text-gray-500'}`}>{s.label}</span>
+              <span className={`hidden sm:block text-sm whitespace-nowrap ${idx <= stepIndex ? 'text-white' : 'text-gray-500'}`}>{s.label}</span>
             </div>
           ))}
         </div>
@@ -142,27 +164,6 @@ export default function AppointmentWizard() {
             transition={{ duration: 0.3 }}
             className="bg-gray-900 border border-gray-800 rounded-xl p-6 md:p-10"
           >
-            {step === 'service' && (
-              <div className="grid md:grid-cols-2 gap-4">
-                {services.map((service) => (
-                  <button
-                    key={service.id}
-                    type="button"
-                    onClick={() => setSelectedService(service)}
-                    className={`text-left p-6 rounded-lg border transition-colors ${
-                      selectedService?.id === service.id ? 'border-amber-500 bg-amber-500/10' : 'border-gray-800 hover:border-gray-600'
-                    }`}
-                  >
-                    <div className="font-semibold text-white">{service.name}</div>
-                    <div className="text-gray-400 text-sm mt-1">{service.description}</div>
-                    <div className="text-amber-500 font-bold mt-2">
-                      {service.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
-
             {step === 'professional' && (
               <div className="grid md:grid-cols-3 gap-4">
                 {professionals.map((professional) => (
@@ -177,6 +178,25 @@ export default function AppointmentWizard() {
                     <img src={professional.avatarUrl} alt={professional.name} className="w-full aspect-square object-cover rounded-md mb-3" />
                     <div className="font-semibold text-white">{professional.name}</div>
                     <div className="text-amber-500 text-sm">{professional.specialty}</div>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {step === 'service' && (
+              <div className="grid md:grid-cols-2 gap-4">
+                {services.map((service) => (
+                  <button
+                    key={service.id}
+                    type="button"
+                    onClick={() => setSelectedService(service)}
+                    className={`text-left p-6 rounded-lg border transition-colors ${
+                      selectedService?.id === service.id ? 'border-amber-500 bg-amber-500/10' : 'border-gray-800 hover:border-gray-600'
+                    }`}
+                  >
+                    <div className="font-semibold text-white">{service.name}</div>
+                    <div className="text-gray-400 text-sm mt-1">{service.description}</div>
+                    <div className="text-amber-500 font-bold mt-2">{formatCurrency(service.price)}</div>
                   </button>
                 ))}
               </div>
@@ -221,6 +241,65 @@ export default function AppointmentWizard() {
               </div>
             )}
 
+            {step === 'payment' && (
+              <div className="grid grid-cols-2 gap-4">
+                {paymentMethods.map((method) => (
+                  <button
+                    key={method.value}
+                    type="button"
+                    onClick={() => setPaymentMethod(method.value)}
+                    className={`p-4 rounded-lg border text-left transition-colors ${
+                      paymentMethod === method.value ? 'border-amber-500 bg-amber-500/10 text-white' : 'border-gray-800 text-gray-300 hover:border-gray-600'
+                    }`}
+                  >
+                    <div className="font-semibold">{method.label}</div>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {step === 'companion' && (
+              <div className="grid grid-cols-2 gap-4">
+                <button
+                  type="button"
+                  onClick={() => setHasCompanion(true)}
+                  className={`p-6 rounded-lg border text-center transition-colors ${hasCompanion ? 'border-amber-500 bg-amber-500/10 text-white' : 'border-gray-800 text-gray-300 hover:border-gray-600'}`}
+                >
+                  <div className="text-2xl mb-2">👥</div>
+                  <div className="font-semibold">Sim</div>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setHasCompanion(false)}
+                  className={`p-6 rounded-lg border text-center transition-colors ${!hasCompanion ? 'border-amber-500 bg-amber-500/10 text-white' : 'border-gray-800 text-gray-300 hover:border-gray-600'}`}
+                >
+                  <div className="text-2xl mb-2">🙋</div>
+                  <div className="font-semibold">Não</div>
+                </button>
+              </div>
+            )}
+
+            {step === 'firstTime' && (
+              <div className="grid grid-cols-2 gap-4">
+                <button
+                  type="button"
+                  onClick={() => setIsFirstTime(true)}
+                  className={`p-6 rounded-lg border text-center transition-colors ${isFirstTime ? 'border-amber-500 bg-amber-500/10 text-white' : 'border-gray-800 text-gray-300 hover:border-gray-600'}`}
+                >
+                  <div className="text-2xl mb-2">✨</div>
+                  <div className="font-semibold">Sim, primeira vez</div>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsFirstTime(false)}
+                  className={`p-6 rounded-lg border text-center transition-colors ${!isFirstTime ? 'border-amber-500 bg-amber-500/10 text-white' : 'border-gray-800 text-gray-300 hover:border-gray-600'}`}
+                >
+                  <div className="text-2xl mb-2">🔁</div>
+                  <div className="font-semibold">Não, já fui antes</div>
+                </button>
+              </div>
+            )}
+
             {step === 'client' && (
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div>
@@ -260,13 +339,6 @@ export default function AppointmentWizard() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-black rounded-lg border border-gray-800">
                   <div>
-                    <div className="text-sm text-gray-400">Serviço</div>
-                    <div className="text-white font-semibold">{selectedService?.name}</div>
-                  </div>
-                  <div className="text-amber-500 font-bold">{selectedService?.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-black rounded-lg border border-gray-800">
-                  <div>
                     <div className="text-sm text-gray-400">Profissional</div>
                     <div className="text-white font-semibold">{selectedProfessional?.name}</div>
                   </div>
@@ -274,10 +346,26 @@ export default function AppointmentWizard() {
                 </div>
                 <div className="flex items-center justify-between p-4 bg-black rounded-lg border border-gray-800">
                   <div>
+                    <div className="text-sm text-gray-400">Serviço</div>
+                    <div className="text-white font-semibold">{selectedService?.name}</div>
+                  </div>
+                  <div className="text-amber-500 font-bold">{formatCurrency(selectedService!.price)}</div>
+                </div>
+                <div className="flex items-center justify-between p-4 bg-black rounded-lg border border-gray-800">
+                  <div>
                     <div className="text-sm text-gray-400">Data</div>
-                    <div className="text-white font-semibold">{selectedDate}</div>
+                    <div className="text-white font-semibold">{formatDate(selectedDate)}</div>
                   </div>
                   <div className="text-amber-500 font-semibold">{selectedTime}</div>
+                </div>
+                <div className="flex items-center justify-between p-4 bg-black rounded-lg border border-gray-800">
+                  <div>
+                    <div className="text-sm text-gray-400">Pagamento</div>
+                    <div className="text-white font-semibold capitalize">{paymentMethod}</div>
+                  </div>
+                  <div className="text-amber-500 text-sm">
+                    {hasCompanion ? 'Com acompanhante' : 'Sem acompanhante'}
+                  </div>
                 </div>
               </div>
             )}

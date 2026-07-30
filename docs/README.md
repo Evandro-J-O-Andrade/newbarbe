@@ -27,10 +27,14 @@
 
 ## Milestones
 
-- **NWB-M1** — Estrutura base e site premium inicial
-- **NWB-M2** — UX & Polish
-- **NWB-M3** — SEO
-- **NWB-M4** — Agendamento WhatsApp
-- **NWB-M5** — Agendamento Online
-- **NWB-M6** — Painel Administrativo
-- **NWB-M7** — Versão SaaS multi-tenant
+- **NWB-M1** — Fundação
+- **NWB-M2** — Landing Page Premium
+- **NWB-M3** — SEO + Deploy
+- **NWB-M3.1** — Estrutura do Produto
+- **NWB-M4** — Core de Agendamento
+- **NWB-M5** — Banco Supabase
+- **NWB-M6** — Dashboard Admin
+- **NWB-M7** — Painel Barbeiro
+- **NWB-M8** — Painel Cliente
+- **NWB-M9** — Gestão Financeira
+- **NWB-M10** — SaaS Multi-tenant
