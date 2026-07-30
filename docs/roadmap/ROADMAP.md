@@ -37,6 +37,7 @@ O projeto evolui em três módulos principais:
 | NWB-M6.2.4 | Concluída | Premium Motion Layer |
 | NWB-M6.2.5 | Concluída | Demo Access & Route Validation |
 | NWB-M6.3 | Concluída | Access & Customer Flow |
+| NWB-M6.4 | Concluída | Portal de Acesso + Páginas de Produto |
 | NWB-M7 | Planejada | Banco Real Supabase |
 | NWB-M8 | Planejada | Portal do cliente completo |
 | NWB-M9 | Planejada | Financeiro, caixa, relatórios |
