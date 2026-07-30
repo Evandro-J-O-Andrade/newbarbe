@@ -6,33 +6,44 @@
  * Responsabilidades:
  * - Observar visibilidade de um elemento.
  * - Retornar ref e estado booleano.
- * - Permitir configuração de margem e trigger único.
+ * - Permitir configuração de margem, threshold e disparo único.
  */
 
 import { useState, useEffect, useRef } from 'react'
 
-export function useInView(options?: IntersectionObserverInit) {
+type UseInViewOptions = IntersectionObserverInit & {
+  triggerOnce?: boolean
+}
+
+export function useInView(options?: UseInViewOptions) {
   const ref = useRef<HTMLDivElement>(null)
   const [isInView, setIsInView] = useState(false)
+  const triggerOnce = options?.triggerOnce ?? false
 
   useEffect(() => {
     const element = ref.current
     if (!element) return
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsInView(true)
-        if (options?.triggerOnce) {
-          observer.disconnect()
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true)
+          if (triggerOnce) {
+            observer.disconnect()
+          }
+        } else if (!triggerOnce) {
+          setIsInView(false)
         }
-      } else if (!options?.triggerOnce) {
-        setIsInView(false)
+      },
+      {
+        threshold: options?.threshold ?? 0,
+        rootMargin: options?.rootMargin ?? '0px',
       }
-    }, options)
+    )
 
     observer.observe(element)
     return () => observer.disconnect()
-  }, [options?.triggerOnce, options?.threshold, options?.rootMargin])
+  }, [triggerOnce, options?.threshold, options?.rootMargin])
 
   return { ref, isInView }
 }
