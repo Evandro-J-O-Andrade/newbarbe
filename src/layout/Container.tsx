@@ -20,14 +20,14 @@ const paddingMap = {
   none: '',
   sm: 'px-4',
   md: 'px-6',
-  lg: 'px-8',
-  xl: 'px-12',
+  lg: 'px-4 sm:px-6 lg:px-8',
+  xl: 'px-4 sm:px-8 lg:px-12',
 }
 
 export default function Container({
   children,
   className = '',
-  maxWidth = '7xl',
+  maxWidth = 'full',
   padding = 'lg',
 }: ContainerProps) {
   return (

@@ -13,21 +13,23 @@
 - LoadingScreen refatorado com única referência ao Scissors
 - Build validado (`npm run build` ✅)
 
-### Arquivos alterados
+### Layout (visual recovery)
 
-- src/components/LoadingScreen.tsx (refatorado — única tesoura)
-- src/components/navigation/BackButton.tsx (novo)
-- src/components/Professionals.tsx (card clicável)
-- src/features/auth/pages/LoginPage.tsx (BackButton + auth real)
-- src/features/auth/pages/RegisterPage.tsx (BackButton + auth real)
-- src/pages/FAQPage.tsx (accordion funcional)
-- src/pages/ContactPage.tsx (Google Maps embed)
-- src/pages/AboutPage.tsx (BackButton)
-- src/pages/ProductPage.tsx (BackButton)
-- src/pages/CartPage.tsx (BackButton)
-- src/pages/CheckoutPage.tsx (BackButton)
-- src/pages/ServicesPage.tsx (BackButton)
-- src/pages/BarbersPage.tsx (BackButton)
+- Container default changed to `max-w-full` (wider content area)
+- Container padding made responsive (`px-4 sm:px-6 lg:px-8`)
+- Section padding adjusted (`py-14` default instead of `py-16`)
+- All public pages now use `full` maxWidth or responsive padding
+
+### Visual fixes (Sprint 1.2 visual recovery)
+
+- Container.tsx: wider default maxWidth, responsive padding
+- Section.tsx: adjusted padding for better spacing
+- BackButton component applied to all public pages
+- FAQPage: accordion functional
+- ContactPage: Google Maps iframe embed
+- Professionals: clickable cards with navigation
+- LoginPage/RegisterPage: real Supabase Auth, BackButton
+- LoadingScreen: single scissors animation
 
 ---
 

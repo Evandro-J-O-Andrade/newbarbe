@@ -12,10 +12,10 @@ interface SectionProps {
 
 const paddingMap = {
   none: '',
-  sm: 'py-8',
-  md: 'py-12',
-  lg: 'py-16',
-  xl: 'py-24',
+  sm: 'py-6',
+  md: 'py-10',
+  lg: 'py-14',
+  xl: 'py-20',
 }
 
 export default function Section({
