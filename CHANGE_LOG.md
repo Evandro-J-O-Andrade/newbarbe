@@ -76,6 +76,41 @@
 - Sprint 0 agora está versionado no git e visível para deploy
 - Próximo sprint: Sprint 1 — Fundação Supabase (banco real, auth, agendamento, notificações)
 
+---
+
+## NWB-M6.5.5 — Sprint 1.1: RLS Policies & Real Supabase Auth
+
+**Data:** 2026-07-31
+
+### Feito
+
+- Criada migration de RLS policies (`supabase/migrations/20260731000000_add_rls_policies.sql`)
+- Policies de isolamento multi-tenant para todas as tabelas: empresa, servico, barbeiro, cadeira, cliente, agendamento, usuario
+- Helper function `private.get_empresa_id()` para resolver empresa do usuário logado
+- LoginPage agora usa `signInWithPassword` reais do Supabase em vez de mock localStorage
+- RegisterPage agora usa `signUp` reais do Supabase em vez de mock localStorage
+- Ambas as páginas têm loading states e exibição de erros
+- LoginPage mantém opção de Google OAuth via `signInWithOAuth`
+- AuthProvider (`useAuth.tsx`) expandido com método `register` que cria usuário no Supabase Auth
+- `.env.example` atualizado com `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` no topo
+- `supabase/README.md` expandido com instruções de configuração completas
+- Auth wiring conectado: mock localStorage → supabase.auth real
+
+### Migração
+
+- `supabase/migrations/20260731000000_add_rls_policies.sql` (novo)
+
+### Auth
+
+- src/features/auth/pages/LoginPage.tsx (real Supabase Auth)
+- src/features/auth/pages/RegisterPage.tsx (real Supabase Auth)
+- src/hooks/useAuth.tsx (registrar método)
+
+### Config
+
+- .env.example (Supabase vars atualizadas)
+- supabase/README.md (instruções setup)
+
 **Data:** 2026-07-31
 
 ### Feito
