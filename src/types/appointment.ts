@@ -22,6 +22,8 @@ export interface Professional {
   specialty: string
   avatarUrl: string
   instagram?: string
+  whatsapp?: string
+  experience?: string
 }
 
 export interface TimeSlot {

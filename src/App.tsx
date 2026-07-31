@@ -14,6 +14,7 @@ import AdminBarbersPage from '@/features/admin/pages/AdminBarbersPage'
 import AdminServicesPage from '@/features/admin/pages/AdminServicesPage'
 import AdminClientsPage from '@/features/admin/pages/AdminClientsPage'
 import BarberDashboardPage from '@/features/barber/pages/BarberDashboardPage'
+import BarberProfilePage from '@/features/barber/pages/BarberProfilePage'
 import ClientDashboardPage from '@/features/client/pages/ClientDashboardPage'
 import LoginPage from '@/features/auth/pages/LoginPage'
 import RegisterPage from '@/features/auth/pages/RegisterPage'
@@ -31,6 +32,9 @@ import CTA from '@/components/CTA'
 import Footer from '@/components/Footer'
 import NotFound from '@/pages/NotFound'
 import ServerError from '@/pages/ServerError'
+import ProductsPage from '@/pages/ProductsPage'
+import ServicesPage from '@/pages/ServicesPage'
+import BarbersPage from '@/pages/BarbersPage'
 import { AuthProvider } from '@/hooks/useAuth'
 import ProtectedRoute from '@/components/ProtectedRoute'
 
@@ -199,6 +203,14 @@ function App() {
                 }
               />
               <Route
+                path="/barbeiro/:id"
+                element={
+                  <ProtectedRoute allowedRoles={['CLIENTE', 'ADMIN']}>
+                    <BarberProfilePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
                 path="/barbeiro"
                 element={
                   <ProtectedRoute allowedRoles={['BARBEIRO', 'ADMIN']}>
@@ -214,6 +226,25 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route
+                path="/barbeiro/:id"
+                element={
+                  <ProtectedRoute allowedRoles={['CLIENTE', 'ADMIN']}>
+                    <BarberProfilePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/barbeiro"
+                element={
+                  <ProtectedRoute allowedRoles={['BARBEIRO', 'ADMIN']}>
+                    <BarberPanel />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/produtos" element={<ProductsPage />} />
+              <Route path="/servicos" element={<ServicesPage />} />
+              <Route path="/barbeiros" element={<BarbersPage />} />
               <Route path="/404" element={<NotFound />} />
               <Route path="/500" element={<ServerError />} />
               <Route path="*" element={<NotFound />} />

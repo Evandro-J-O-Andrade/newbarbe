@@ -1,15 +1,18 @@
 -- Seed inicial para desenvolvimento
+-- Admin Master é criado pelo sistema (seed). Não permitir cadastro público de admin/barbeiro.
+-- Clientes se cadastram pela interface.
+
 insert into public.empresa (nome, slug, telefone, whatsapp, instagram, endereco)
 values ('New Wave Barber', 'new-wave-barber', '(11) 99999-9999', '5511999999999', '@newwave', 'Av. Paulista, 1000 - São Paulo, SP');
 
 insert into public.usuario (empresa_id, nome, email, senha_hash, tipo)
-values (1, 'Admin', 'admin@newwavebarber.com.br', 'hash', 'ADMIN');
+values (1, 'Administrador Master', 'admin@newwavebarber.com', 'hash', 'ADMIN');
 
-insert into public.barbeiro (empresa_id, nome, tipo, especialidade, comissao)
+insert into public.barbeiro (empresa_id, usuario_id, nome, tipo, especialidade, comissao)
 values 
-  (1, 'João Silva', 'INTERNO', 'Cortes Modernos', 50),
-  (1, 'Pedro Costa', 'INTERNO', 'Barba e Pigmentação', 50),
-  (1, 'Lucas Oliveira', 'FREELANCER', 'Cortes Clássicos', 40);
+  (1, NULL, 'João Silva', 'INTERNO', 'Cortes Modernos', 50),
+  (1, NULL, 'Pedro Costa', 'INTERNO', 'Barba e Pigmentação', 50),
+  (1, NULL, 'Lucas Oliveira', 'FREELANCER', 'Cortes Clássicos', 40);
 
 insert into public.cadeira (empresa_id, numero, status)
 values 

@@ -26,9 +26,15 @@ const images = [
   { src: 'https://images.unsplash.com/photo-1503951914875-452162b0203f?w=600&h=600&fit=crop', tall: false },
 ]
 
+const FALLBACK = 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600&h=600&fit=crop&q=80'
+
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [brokenImages, setBrokenImages] = useState<Set<number>>(new Set())
+
+  function handleError(index: number) {
+    setBrokenImages((prev) => new Set(prev).add(index))
+  }
 
   return (
     <section id="galeria" className="py-24 bg-black">
@@ -51,30 +57,35 @@ export default function Gallery() {
         </motion.div>
 
         <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
-          {images.map((image, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.03 }}
-              onClick={() => !brokenImages.has(index) && setSelectedImage(image.src)}
-              className={`relative overflow-hidden rounded-xl cursor-pointer group ${image.tall ? 'md:row-span-2' : ''} ${brokenImages.has(index) ? 'hidden' : ''}`}
-            >
-              <img
-                src={image.src}
-                alt={`Trabalho ${index + 1}`}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-auto object-cover"
-                onError={() => setBrokenImages((prev) => new Set(prev).add(index))}
-              />
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <ZoomIn className="w-8 h-8 text-white" />
-              </div>
-            </motion.div>
-          ))}
+          {images.map((image, index) => {
+            const isBroken = brokenImages.has(index)
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ scale: 1.03 }}
+                onClick={() => !isBroken && setSelectedImage(isBroken ? FALLBACK : image.src)}
+                className={`relative overflow-hidden rounded-xl cursor-pointer group ${image.tall ? 'md:row-span-2' : ''}`}
+              >
+                <img
+                  src={isBroken ? FALLBACK : image.src}
+                  alt={`Trabalho ${index + 1}`}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
+                  onError={() => handleError(index)}
+                />
+                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div className="w-12 h-12 bg-amber-500/90 rounded-full flex items-center justify-center">
+                    <ZoomIn className="w-5 h-5 text-black" />
+                  </div>
+                </div>
+              </motion.div>
+            )
+          })}
         </div>
       </div>
 
@@ -85,20 +96,24 @@ export default function Gallery() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedImage(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 cursor-pointer"
           >
             <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 text-white hover:text-amber-500 transition-colors"
+              onClick={(e) => {
+                e.stopPropagation()
+                setSelectedImage(null)
+              }}
+              className="absolute top-4 right-4 w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-colors"
             >
-              <X className="w-8 h-8" />
+              <X className="w-5 h-5" />
             </button>
             <motion.img
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.3 }}
               src={selectedImage}
-              alt="Galeria"
-              className="max-w-full max-h-full object-contain rounded-lg"
+              alt="Galeria ampliada"
+              className="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl"
             />
           </motion.div>
         )}

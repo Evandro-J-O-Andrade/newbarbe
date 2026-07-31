@@ -47,6 +47,7 @@ export const professionals: Professional[] = [
     specialty: 'Cortes Modernos',
     avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
     instagram: '@joao.silva',
+    whatsapp: '5511999999999',
   },
   {
     id: 'pro-2',
@@ -54,6 +55,7 @@ export const professionals: Professional[] = [
     specialty: 'Barba e Pigmentação',
     avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face',
     instagram: '@pedro.costa',
+    whatsapp: '5511888888888',
   },
   {
     id: 'pro-3',
@@ -61,6 +63,7 @@ export const professionals: Professional[] = [
     specialty: 'Cortes Clássicos',
     avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
     instagram: '@lucas.oliveira',
+    whatsapp: '5511777777777',
   },
 ]
 

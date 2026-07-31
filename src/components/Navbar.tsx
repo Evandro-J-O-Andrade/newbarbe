@@ -76,12 +76,12 @@ export default function Navbar() {
             </span>
           </a>
 
-          <div className="hidden lg:flex items-center gap-10">
+          <div className="hidden lg:flex items-center gap-6 xl:gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="relative text-sm font-medium tracking-wide text-gray-300 hover:text-amber-500 transition-colors duration-200 group"
+                className="relative text-sm font-medium tracking-wide text-gray-300 hover:text-amber-500 transition-colors duration-200 group whitespace-nowrap"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-500 group-hover:w-full transition-all duration-300" />
@@ -89,20 +89,20 @@ export default function Navbar() {
             ))}
             <a
               href="#agendar"
-              className="relative px-6 py-2.5 bg-amber-500 text-black font-semibold text-sm tracking-wide rounded overflow-hidden group"
+              className="relative px-5 py-2.5 bg-amber-500 text-black font-semibold text-sm tracking-wide rounded overflow-hidden group whitespace-nowrap"
             >
               <span className="relative z-10">Agendar</span>
               <span className="absolute inset-0 bg-amber-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             </a>
             <Link
               to="/agendamento-rapido"
-              className="relative px-6 py-2.5 border border-gray-700 text-white font-semibold text-sm tracking-wide rounded hover:border-amber-500 hover:text-amber-500 transition-all duration-300"
+              className="relative px-5 py-2.5 border border-gray-700 text-white font-semibold text-sm tracking-wide rounded hover:border-amber-500 hover:text-amber-500 transition-all duration-300 whitespace-nowrap"
             >
-              Agendamento rápido
+              Rápido
             </Link>
             <Link
               to="/login"
-              className="relative px-6 py-2.5 border border-gray-700 text-white font-semibold text-sm tracking-wide rounded hover:border-amber-500 hover:text-amber-500 transition-all duration-300"
+              className="relative px-5 py-2.5 border border-gray-700 text-white font-semibold text-sm tracking-wide rounded hover:border-amber-500 hover:text-amber-500 transition-all duration-300 whitespace-nowrap"
             >
               Entrar
             </Link>
