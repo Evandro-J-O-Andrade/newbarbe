@@ -17,6 +17,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, ChevronDown } from 'lucide-react'
 import BarberPole from './BarberPole'
+import { Link } from 'react-router-dom'
 
 const titleText = 'Seu estilo começa aqui'
 
@@ -114,12 +115,12 @@ export default function Hero() {
             </span>
             <span className="absolute inset-0 bg-amber-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           </a>
-          <a
-            href="#servicos"
+          <Link
+            to="/agendamento-rapido"
             className="px-8 py-4 border border-gray-700 text-white font-semibold rounded hover:border-amber-500 hover:text-amber-500 transition-all duration-300"
           >
-            Ver Serviços
-          </a>
+            Agendamento rápido
+          </Link>
         </motion.div>
 
         <motion.div

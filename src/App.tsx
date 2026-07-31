@@ -7,6 +7,7 @@ import JsonLd from '@/components/JsonLd'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import { env } from '@/config/env'
 import AppointmentWizard from '@/features/appointment/AppointmentWizard'
+import QuickAppointmentPage from '@/features/appointment/QuickAppointmentPage'
 import AdminLayout from '@/features/admin/layout/AdminLayout'
 import DashboardPage from '@/features/admin/dashboard/DashboardPage'
 import AdminBarbersPage from '@/features/admin/pages/AdminBarbersPage'
@@ -162,6 +163,7 @@ function App() {
             <div className="min-h-screen bg-black text-white">
               <Routes>
                 <Route path="/" element={<LandingPage />} />
+                <Route path="/agendamento-rapido" element={<QuickAppointmentPage />} />
                 <Route path="/agendamento" element={<AppointmentPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/cadastro" element={<RegisterPage />} />

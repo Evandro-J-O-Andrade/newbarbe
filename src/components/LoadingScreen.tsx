@@ -1,5 +1,5 @@
 /**
- * Loading Screen
+ * LoadingScreen
  *
  * Tela de carregamento exibida durante a inicialização do site.
  *
@@ -22,8 +22,8 @@ export default function LoadingScreen() {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    const duration = 1800
-    const interval = 50
+    const duration = 2200
+    const interval = 40
     const steps = duration / interval
     let current = 0
 
@@ -34,7 +34,7 @@ export default function LoadingScreen() {
 
       if (current >= steps) {
         clearInterval(timer)
-        setTimeout(() => setIsLoading(false), 300)
+        setTimeout(() => setIsLoading(false), 400)
       }
     }, interval)
 
@@ -47,21 +47,35 @@ export default function LoadingScreen() {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: 'easeInOut' }}
+          transition={{ duration: 0.7, ease: 'easeInOut' }}
           className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black"
         >
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
+            initial={{ scale: 0.85, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="flex flex-col items-center gap-8"
+            transition={{ duration: 0.9, ease: 'easeOut' }}
+            className="flex flex-col items-center gap-10"
           >
-            <div className="relative">
-              <Scissors className="w-16 h-16 text-amber-500" />
-              <div className="absolute inset-0 bg-amber-500/20 blur-xl rounded-full" />
+            <div className="relative flex items-center justify-center">
+              <motion.div
+                animate={{
+                  rotate: [0, -15, 15, -10, 10, 0],
+                  scale: [1, 1.05, 1, 1.05, 1],
+                }}
+                transition={{
+                  duration: 1.6,
+                  repeat: Infinity,
+                  repeatDelay: 0.4,
+                  ease: 'easeInOut',
+                }}
+                className="relative"
+              >
+                <Scissors className="w-16 h-16 text-amber-500" />
+                <div className="absolute inset-0 bg-amber-500/25 blur-2xl rounded-full" />
+              </motion.div>
             </div>
 
-            <div className="w-64 space-y-3">
+            <div className="w-72 space-y-4">
               <div className="h-px w-full bg-gray-800 overflow-hidden">
                 <motion.div
                   className="h-full bg-amber-500"

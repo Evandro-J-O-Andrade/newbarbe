@@ -86,6 +86,12 @@ export default function Navbar() {
               <span className="absolute inset-0 bg-amber-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             </a>
             <Link
+              to="/agendamento-rapido"
+              className="relative px-6 py-2.5 border border-gray-700 text-white font-semibold text-sm tracking-wide rounded hover:border-amber-500 hover:text-amber-500 transition-all duration-300"
+            >
+              Agendamento rápido
+            </Link>
+            <Link
               to="/login"
               className="relative px-6 py-2.5 border border-gray-700 text-white font-semibold text-sm tracking-wide rounded hover:border-amber-500 hover:text-amber-500 transition-all duration-300"
             >
@@ -176,6 +182,13 @@ export default function Navbar() {
                 transition={{ delay: navLinks.length * 0.1 + 0.1 }}
                 className="mt-4 flex flex-col gap-3"
               >
+                <Link
+                  to="/agendamento-rapido"
+                  onClick={() => setIsOpen(false)}
+                  className="px-8 py-3 border border-gray-700 text-white font-semibold tracking-wide rounded text-center hover:border-amber-500 hover:text-amber-500 transition-all duration-300"
+                >
+                  Agendamento rápido
+                </Link>
                 <Link
                   to="/login"
                   onClick={() => setIsOpen(false)}
