@@ -31,8 +31,12 @@ export default function LoginPage() {
     setError('')
     setLoading(true)
     try {
-      const { supabase } = await import('@/services/supabase')
-      const { error } = await supabase.auth.signInWithOAuth({
+      const supabaseModule = await import('@/services/supabase')
+      const client = supabaseModule.supabase
+      if (!client) {
+        throw new Error('Supabase não configurado')
+      }
+      const { error } = await client.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: window.location.origin + '/cliente',
