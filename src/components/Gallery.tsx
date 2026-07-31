@@ -21,13 +21,14 @@ const images = [
   { src: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600&h=800&fit=crop', tall: true },
   { src: 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&h=600&fit=crop', tall: false },
   { src: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&h=600&fit=crop', tall: false },
-  { src: 'https://images.unsplash.com/photo-1503951914875-452162b0203f?w=600&h=800&fit=crop', tall: true },
+  { src: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&h=800&fit=crop', tall: true },
   { src: 'https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?w=600&h=600&fit=crop', tall: false },
-  { src: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&h=600&fit=crop', tall: false },
+  { src: 'https://images.unsplash.com/photo-1503951914875-452162b0203f?w=600&h=600&fit=crop', tall: false },
 ]
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [brokenImages, setBrokenImages] = useState<Set<number>>(new Set())
 
   return (
     <section id="galeria" className="py-24 bg-black">
@@ -58,8 +59,8 @@ export default function Gallery() {
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ scale: 1.03 }}
-              onClick={() => setSelectedImage(image.src)}
-              className={`relative overflow-hidden rounded-xl cursor-pointer group ${image.tall ? 'md:row-span-2' : ''}`}
+              onClick={() => !brokenImages.has(index) && setSelectedImage(image.src)}
+              className={`relative overflow-hidden rounded-xl cursor-pointer group ${image.tall ? 'md:row-span-2' : ''} ${brokenImages.has(index) ? 'hidden' : ''}`}
             >
               <img
                 src={image.src}
@@ -67,6 +68,7 @@ export default function Gallery() {
                 loading="lazy"
                 decoding="async"
                 className="w-full h-auto object-cover"
+                onError={() => setBrokenImages((prev) => new Set(prev).add(index))}
               />
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                 <ZoomIn className="w-8 h-8 text-white" />

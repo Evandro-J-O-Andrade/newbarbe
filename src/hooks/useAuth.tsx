@@ -27,6 +27,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (!supabase) {
+      setLoading(false)
+      return
+    }
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         loadUserProfile(session.user.id)
@@ -48,6 +53,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   async function loadUserProfile(userId: string) {
+    if (!supabase) {
+      setLoading(false)
+      return
+    }
+
     const { data } = await supabase
       .from('usuario')
       .select('*')
@@ -61,6 +71,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function login(email: string, password: string) {
+    if (!supabase) {
+      throw new Error('Supabase não configurado')
+    }
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -72,6 +86,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function logout() {
+    if (!supabase) {
+      return
+    }
+
     await supabase.auth.signOut()
   }
 

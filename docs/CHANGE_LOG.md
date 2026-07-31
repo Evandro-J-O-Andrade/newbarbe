@@ -1,5 +1,40 @@
 # Change Log — New Wave Barber
 
+## 2026-07-31 — NWB-M6.5.1 UI/UX Stabilization
+
+### Supabase
+- `supabase.ts` não quebra mais em dev sem `.env`
+- `useAuth.tsx` e services usam fallback quando Supabase não está configurado
+- App funciona localmente sem variáveis de ambiente
+
+### Manifest
+- Removidos ícones inexistentes do `site.webmanifest`
+- Eliminado erro de download no Chrome/DevTools
+
+### Global
+- Regras anti-overflow adicionadas em `src/index.css`
+- `box-sizing: border-box` global
+- `overflow-x: hidden` em seções principais
+- `img, video, canvas, svg` com `max-width: 100%`
+
+### Navbar
+- Fechamento do menu mobile com tecla ESC
+- Scroll lock já existente mantido
+
+### Gallery
+- Fallback para imagens quebradas via `onError`
+- Imagens indisponíveis são ocultadas automaticamente
+
+### Documentação
+- Criado `docs/UI_AUDIT.md`
+- Criado `docs/history/PRE_UPDATE_NWB-M6.5.1.md`
+- Criado `docs/history/POST_UPDATE_NWB-M6.5.1.md`
+
+### Build
+- `npm run build` ok
+
+---
+
 ## 2026-07-31 — Melhorias visuais e de UX
 
 ### LoadingScreen

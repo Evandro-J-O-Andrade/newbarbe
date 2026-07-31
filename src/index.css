@@ -15,6 +15,29 @@ body,
   overflow-x: hidden;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+section,
+header,
+footer,
+nav,
+main {
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
 }

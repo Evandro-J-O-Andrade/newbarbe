@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import LoadingScreen from '@/components/LoadingScreen'
 import { useLenis } from '@/hooks/useLenis'
@@ -156,73 +156,71 @@ function ClientPortal() {
 function App() {
   return (
     <HelmetProvider>
-      <Router>
-        <AuthProvider>
-          <LoadingScreen />
-          <ErrorBoundary>
-            <div className="min-h-screen bg-black text-white">
-              <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/agendamento-rapido" element={<QuickAppointmentPage />} />
-                <Route path="/agendamento" element={<AppointmentPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/cadastro" element={<RegisterPage />} />
-                <Route
-                  path="/admin"
-                  element={
-                    <ProtectedRoute allowedRoles={['ADMIN']}>
-                      <AdminDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/barbeiros"
-                  element={
-                    <ProtectedRoute allowedRoles={['ADMIN']}>
-                      <AdminBarbers />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/servicos"
-                  element={
-                    <ProtectedRoute allowedRoles={['ADMIN']}>
-                      <AdminServices />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/clientes"
-                  element={
-                    <ProtectedRoute allowedRoles={['ADMIN']}>
-                      <AdminClients />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/barbeiro"
-                  element={
-                    <ProtectedRoute allowedRoles={['BARBEIRO', 'ADMIN']}>
-                      <BarberPanel />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/cliente"
-                  element={
-                    <ProtectedRoute allowedRoles={['CLIENTE', 'ADMIN']}>
-                      <ClientPortal />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="/404" element={<NotFound />} />
-                <Route path="/500" element={<ServerError />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </div>
-          </ErrorBoundary>
-        </AuthProvider>
-      </Router>
+      <AuthProvider>
+        <LoadingScreen />
+        <ErrorBoundary>
+          <div className="min-h-screen bg-black text-white">
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/agendamento-rapido" element={<QuickAppointmentPage />} />
+              <Route path="/agendamento" element={<AppointmentPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/cadastro" element={<RegisterPage />} />
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute allowedRoles={['ADMIN']}>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/barbeiros"
+                element={
+                  <ProtectedRoute allowedRoles={['ADMIN']}>
+                    <AdminBarbers />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/servicos"
+                element={
+                  <ProtectedRoute allowedRoles={['ADMIN']}>
+                    <AdminServices />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/clientes"
+                element={
+                  <ProtectedRoute allowedRoles={['ADMIN']}>
+                    <AdminClients />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/barbeiro"
+                element={
+                  <ProtectedRoute allowedRoles={['BARBEIRO', 'ADMIN']}>
+                    <BarberPanel />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/cliente"
+                element={
+                  <ProtectedRoute allowedRoles={['CLIENTE', 'ADMIN']}>
+                    <ClientPortal />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/404" element={<NotFound />} />
+              <Route path="/500" element={<ServerError />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
+        </ErrorBoundary>
+      </AuthProvider>
     </HelmetProvider>
   )
 }

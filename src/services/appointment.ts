@@ -11,6 +11,10 @@ import { supabase } from './supabase'
 import type { Service, Professional, TimeSlot } from '@/types/appointment'
 
 export async function fetchServices(): Promise<Service[]> {
+  if (!supabase) {
+    return []
+  }
+
   const { data, error } = await supabase.from('servico').select('*').eq('ativo', true)
   if (error) throw error
   return data.map((item) => ({
@@ -23,6 +27,10 @@ export async function fetchServices(): Promise<Service[]> {
 }
 
 export async function fetchProfessionals(): Promise<Professional[]> {
+  if (!supabase) {
+    return []
+  }
+
   const { data, error } = await supabase.from('barbeiro').select('*').eq('ativo', true)
   if (error) throw error
   return data.map((item) => ({
@@ -35,6 +43,11 @@ export async function fetchProfessionals(): Promise<Professional[]> {
 }
 
 export async function fetchTimeSlots(professionalId: string, date: string): Promise<TimeSlot[]> {
+  if (!supabase) {
+    const allSlots = ['09:00', '09:40', '10:20', '11:00', '11:40', '13:00', '13:40', '14:20', '15:00', '15:40', '16:20', '17:00', '17:40']
+    return allSlots.map((time) => ({ time, available: true }))
+  }
+
   const { data, error } = await supabase
     .from('agendamento')
     .select('hora_inicio, hora_fim')

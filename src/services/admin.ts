@@ -10,6 +10,15 @@ import { supabase } from '@/services/supabase'
 import type { Appointment, Chair } from '@/types/database'
 
 export async function fetchDashboardMetrics() {
+  if (!supabase) {
+    return {
+      clientsToday: 24,
+      appointments: 18,
+      activeBarbers: 5,
+      estimatedRevenue: 1850,
+    }
+  }
+
   const today = new Date().toISOString().split('T')[0]
 
   const [{ count: appointmentsCount }] = await Promise.all([
@@ -33,6 +42,10 @@ export async function fetchDashboardMetrics() {
 }
 
 export async function fetchTodayAppointments(): Promise<(Appointment & { barber?: any; service?: any; chair?: any })[]> {
+  if (!supabase) {
+    return []
+  }
+
   const today = new Date().toISOString().split('T')[0]
 
   const { data, error } = await supabase
@@ -46,6 +59,10 @@ export async function fetchTodayAppointments(): Promise<(Appointment & { barber?
 }
 
 export async function fetchChairs(): Promise<Chair[]> {
+  if (!supabase) {
+    return []
+  }
+
   const { data, error } = await supabase.from('cadeira').select('*')
   if (error) throw error
   return data || []
