@@ -95,6 +95,7 @@
 - `.env.example` atualizado com `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` no topo
 - `supabase/README.md` expandido com instruções de configuração completas
 - Auth wiring conectado: mock localStorage → supabase.auth real
+- Build validado após correções de TypeScript (`npm run build` ✅)
 
 ### Migração
 
