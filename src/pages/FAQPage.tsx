@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 
 const faqs = [
@@ -14,6 +15,12 @@ const faqs = [
 ]
 
 export default function FAQPage() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  function toggle(index: number) {
+    setOpenIndex(openIndex === index ? null : index)
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
       <section className="py-20 bg-gray-900">
@@ -29,19 +36,33 @@ export default function FAQPage() {
       </section>
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="space-y-4">
+        <div className="space-y-3">
           {faqs.map((faq, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="bg-gray-900 border border-gray-800 rounded-xl p-6"
+              className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden"
             >
-              <h3 className="text-white font-bold text-lg mb-2">{faq.q}</h3>
-              <p className="text-gray-300 text-sm leading-relaxed">{faq.a}</p>
-            </motion.div>
+              <button
+                type="button"
+                onClick={() => toggle(index)}
+                className="w-full flex items-center justify-between p-6 text-left"
+              >
+                <h3 className="text-white font-bold text-lg">{faq.q}</h3>
+                <span className="text-amber-500 text-lg font-bold ml-4 flex-shrink-0">
+                  {openIndex === index ? '−' : '+'}
+                </span>
+              </button>
+              {openIndex === index && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  className="px-6 pb-6"
+                >
+                  <p className="text-gray-300 text-sm leading-relaxed">{faq.a}</p>
+                </motion.div>
+              )}
+            </div>
           ))}
         </div>
       </div>

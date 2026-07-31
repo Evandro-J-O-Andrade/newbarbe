@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { ShoppingCart, Trash2, Plus, Minus } from 'lucide-react'
+import BackButton from '@/components/navigation/BackButton'
 
 const cartItems = [
   { id: 1, name: 'Gelo Professional', price: 25, qty: 1, image: 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=400&h=400&fit=crop' },
@@ -11,6 +12,9 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <div className="absolute top-4 left-4 z-50">
+        <BackButton />
+      </div>
       <section className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="text-amber-500 text-sm font-semibold tracking-widest uppercase">Carrinho</span>

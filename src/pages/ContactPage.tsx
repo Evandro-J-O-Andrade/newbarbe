@@ -65,9 +65,16 @@ export default function ContactPage() {
 
           <div>
             <h2 className="text-2xl font-bold mb-6">Encontre-nos</h2>
-            <div className="bg-gray-900 border border-gray-800 rounded-xl h-80 flex items-center justify-center">
-              <p className="text-gray-400">Mapa do Google Maps</p>
-            </div>
+            <iframe
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.5!2d-46.6583!3d-23.5615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5c5b7e134a91%3A0x6a4e9f1e0e3e3e3e!2sAv.%20Paulista%2C%201000%20-%20S%C3%A3o%20Paulo%2C%20SP"
+  width="100%"
+  height="400"
+  style={{ border: 0, borderRadius: '12px' }}
+  allowFullScreen={true}
+  loading="lazy"
+  referrerPolicy="no-referrer-when-downgrade"
+  className="w-full h-80 md:h-96 rounded-xl"
+/>
             <button className="mt-4 w-full py-3 bg-amber-500 text-black font-semibold rounded-xl hover:bg-amber-400 transition-colors">
               Abrir no Google Maps
             </button>

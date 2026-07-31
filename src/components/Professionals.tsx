@@ -15,7 +15,7 @@
 
 import { motion } from 'framer-motion'
 import { ChevronRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const professionals = [
   {
@@ -57,6 +57,7 @@ const professionals = [
 ]
 
 export default function Professionals() {
+  const navigate = useNavigate()
   return (
     <section id="equipe" className="py-24 bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -86,7 +87,8 @@ export default function Professionals() {
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -10 }}
-              className="group relative overflow-hidden rounded-xl bg-gray-800"
+              onClick={() => navigate(`/barbeiro/${person.id}`)}
+              className="group relative overflow-hidden rounded-xl bg-gray-800 cursor-pointer"
             >
               <div className="aspect-[3/4] overflow-hidden">
                 <img

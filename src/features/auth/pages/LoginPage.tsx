@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Scissors, Chrome } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
+import BackButton from '@/components/navigation/BackButton'
 
 export default function LoginPage() {
   const [mode, setMode] = useState<'login' | 'register'>('login')
@@ -51,6 +52,9 @@ export default function LoginPage() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <div className="absolute top-4 left-4 z-50">
+        <BackButton />
+      </div>
       <motion.div
         initial={{ scale: 1.1 }}
         animate={{ scale: 1 }}
