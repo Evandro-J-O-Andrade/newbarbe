@@ -58,7 +58,23 @@
 
 ---
 
-## NWB-M6.5.2 — UI Recovery & Product Completion
+## NWB-M6.5.4 — Sprint 0: Commit & Deploy Closure
+
+**Data:** 2026-07-31
+
+### Feito
+
+- Sprint 0 comprometido e push para `origin/main` (commit `fdcee8b`)
+- Auditoria de deploy concluída: 20 arquivos foram criados/movidos mas estavam apenas no disco local
+- Git status confirmado: `nothing to commit, working tree clean`
+- Build validado (`npm run build` ✅)
+- Netlify deploy aguardando `Clear cache and deploy site`
+
+### Correção de processo
+
+- Identificado que o Kilo criava arquivos localmente e reportava "concluído" sem commit
+- Sprint 0 agora está versionado no git e visível para deploy
+- Próximo sprint: Sprint 1 — Fundação Supabase (banco real, auth, agendamento, notificações)
 
 **Data:** 2026-07-31
 
