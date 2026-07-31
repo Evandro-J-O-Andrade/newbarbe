@@ -1,5 +1,92 @@
 # CHANGE_LOG — New Wave Barber
 
+## NWB-M6.5.6 — Sprint 1.2: Frontend Stabilization
+
+**Data:** 2026-07-31
+
+### Feito
+
+- BackButton component criado e aplicado em todas as páginas públicas
+- FAQPage transformada em accordion funcional com toggle
+- ContactPage com Google Maps iframe embed responsivo
+- ProfessionalCard totalmente clicável (onClick → /barbeiro/:id)
+- LoadingScreen refatorado com única referência ao Scissors
+- Build validado (`npm run build` ✅)
+
+### Arquivos alterados
+
+- src/components/LoadingScreen.tsx (refatorado — única tesoura)
+- src/components/navigation/BackButton.tsx (novo)
+- src/components/Professionals.tsx (card clicável)
+- src/features/auth/pages/LoginPage.tsx (BackButton + auth real)
+- src/features/auth/pages/RegisterPage.tsx (BackButton + auth real)
+- src/pages/FAQPage.tsx (accordion funcional)
+- src/pages/ContactPage.tsx (Google Maps embed)
+- src/pages/AboutPage.tsx (BackButton)
+- src/pages/ProductPage.tsx (BackButton)
+- src/pages/CartPage.tsx (BackButton)
+- src/pages/CheckoutPage.tsx (BackButton)
+- src/pages/ServicesPage.tsx (BackButton)
+- src/pages/BarbersPage.tsx (BackButton)
+
+---
+
+## NWB-M6.5.5 — Sprint 1.1: RLS Policies & Real Supabase Auth
+
+**Data:** 2026-07-31
+
+### Feito
+
+- Criada migration de RLS policies (`supabase/migrations/20260731000000_add_rls_policies.sql`)
+- Policies de isolamento multi-tenant para todas as tabelas
+- Helper function `private.get_empresa_id()` para resolver empresa do usuário logado
+- LoginPage agora usa `signInWithPassword` reais do Supabase em vez de mock localStorage
+- RegisterPage agora usa `signUp` reais do Supabase em vez de mock localStorage
+- Ambas as páginas têm loading states e exibição de erros
+- LoginPage mantém opção de Google OAuth via `signInWithOAuth`
+- AuthProvider (`useAuth.tsx`) expandido com método `register` que cria usuário no Supabase Auth
+- `.env.example` atualizado com `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` no topo
+- `supabase/README.md` expandido com instruções de configuração completas
+- Auth wiring conectado: mock localStorage → supabase.auth real
+- Build validado após correções de TypeScript (`npm run build` ✅)
+
+### Migração
+
+- `supabase/migrations/20260731000000_add_rls_policies.sql` (novo)
+
+### Auth
+
+- src/features/auth/pages/LoginPage.tsx (real Supabase Auth)
+- src/features/auth/pages/RegisterPage.tsx (real Supabase Auth)
+- src/hooks/useAuth.tsx (registrar método)
+
+### Config
+
+- .env.example (Supabase vars atualizadas)
+- supabase/README.md (instruções setup)
+
+---
+
+## NWB-M6.5.4 — Sprint 0: Commit & Deploy Closure
+
+**Data:** 2026-07-31
+
+### Feito
+
+- Sprint 0 comprometido e push para `origin/main` (commit `fdcee8b`)
+- Auditoria de deploy concluída: 20 arquivos foram criados/movidos mas estavam apenas no disco local
+- Git status confirmado: `nothing to commit, working tree clean`
+- Build validado (`npm run build` ✅)
+- Netlify deploy aguardando `Clear cache and deploy site`
+
+### Correção de processo
+
+- Identificado que o Kilo criava arquivos localmente e reportava "concluído" sem commit
+- Sprint 0 agora está versionado no git e visível para deploy
+- Próximo sprint: Sprint 1 — Fundação Supabase (banco real, auth, agendamento, notificações)
+
+---
+
 ## NWB-M6.5.3 — Sprint 0: Responsive & Layout Recovery (OBRIGATÓRIA)
 
 **Data:** 2026-07-31
@@ -58,59 +145,7 @@
 
 ---
 
-## NWB-M6.5.4 — Sprint 0: Commit & Deploy Closure
-
-**Data:** 2026-07-31
-
-### Feito
-
-- Sprint 0 comprometido e push para `origin/main` (commit `fdcee8b`)
-- Auditoria de deploy concluída: 20 arquivos foram criados/movidos mas estavam apenas no disco local
-- Git status confirmado: `nothing to commit, working tree clean`
-- Build validado (`npm run build` ✅)
-- Netlify deploy aguardando `Clear cache and deploy site`
-
-### Correção de processo
-
-- Identificado que o Kilo criava arquivos localmente e reportava "concluído" sem commit
-- Sprint 0 agora está versionado no git e visível para deploy
-- Próximo sprint: Sprint 1 — Fundação Supabase (banco real, auth, agendamento, notificações)
-
----
-
-## NWB-M6.5.5 — Sprint 1.1: RLS Policies & Real Supabase Auth
-
-**Data:** 2026-07-31
-
-### Feito
-
-- Criada migration de RLS policies (`supabase/migrations/20260731000000_add_rls_policies.sql`)
-- Policies de isolamento multi-tenant para todas as tabelas: empresa, servico, barbeiro, cadeira, cliente, agendamento, usuario
-- Helper function `private.get_empresa_id()` para resolver empresa do usuário logado
-- LoginPage agora usa `signInWithPassword` reais do Supabase em vez de mock localStorage
-- RegisterPage agora usa `signUp` reais do Supabase em vez de mock localStorage
-- Ambas as páginas têm loading states e exibição de erros
-- LoginPage mantém opção de Google OAuth via `signInWithOAuth`
-- AuthProvider (`useAuth.tsx`) expandido com método `register` que cria usuário no Supabase Auth
-- `.env.example` atualizado com `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` no topo
-- `supabase/README.md` expandido com instruções de configuração completas
-- Auth wiring conectado: mock localStorage → supabase.auth real
-- Build validado após correções de TypeScript (`npm run build` ✅)
-
-### Migração
-
-- `supabase/migrations/20260731000000_add_rls_policies.sql` (novo)
-
-### Auth
-
-- src/features/auth/pages/LoginPage.tsx (real Supabase Auth)
-- src/features/auth/pages/RegisterPage.tsx (real Supabase Auth)
-- src/hooks/useAuth.tsx (registrar método)
-
-### Config
-
-- .env.example (Supabase vars atualizadas)
-- supabase/README.md (instruções setup)
+## NWB-M6.5.2 — UI Recovery & Product Completion
 
 **Data:** 2026-07-31
 
