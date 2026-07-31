@@ -31,10 +31,17 @@ import Contact from '@/components/Contact'
 import CTA from '@/components/CTA'
 import Footer from '@/components/Footer'
 import NotFound from '@/pages/NotFound'
-import ServerError from '@/pages/ServerError'
+import FAQPage from '@/pages/FAQPage'
+import AboutPage from '@/pages/AboutPage'
+import ContactPage from '@/pages/ContactPage'
 import ProductsPage from '@/pages/ProductsPage'
 import ServicesPage from '@/pages/ServicesPage'
 import BarbersPage from '@/pages/BarbersPage'
+import ProductPage from '@/pages/ProductPage'
+import CartPage from '@/pages/CartPage'
+import CheckoutPage from '@/pages/CheckoutPage'
+import BottomNavigation from '@/components/navigation/BottomNavigation'
+import FloatingActionButton from '@/components/navigation/FloatingActionButton'
 import { AuthProvider } from '@/hooks/useAuth'
 import ProtectedRoute from '@/components/ProtectedRoute'
 
@@ -59,6 +66,8 @@ function LandingPage() {
         <CTA />
       </main>
       <Footer />
+      <BottomNavigation />
+      <FloatingActionButton />
     </>
   )
 }
@@ -75,6 +84,8 @@ function AppointmentPage() {
         <AppointmentWizard />
       </main>
       <Footer />
+      <BottomNavigation />
+      <FloatingActionButton />
     </>
   )
 }
@@ -163,7 +174,7 @@ function App() {
       <AuthProvider>
         <LoadingScreen />
         <ErrorBoundary>
-          <div className="min-h-screen bg-black text-white">
+          <div className="min-h-screen bg-black text-white overflow-x-hidden">
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/agendamento-rapido" element={<QuickAppointmentPage />} />
@@ -226,27 +237,16 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route
-                path="/barbeiro/:id"
-                element={
-                  <ProtectedRoute allowedRoles={['CLIENTE', 'ADMIN']}>
-                    <BarberProfilePage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/barbeiro"
-                element={
-                  <ProtectedRoute allowedRoles={['BARBEIRO', 'ADMIN']}>
-                    <BarberPanel />
-                  </ProtectedRoute>
-                }
-              />
               <Route path="/produtos" element={<ProductsPage />} />
               <Route path="/servicos" element={<ServicesPage />} />
               <Route path="/barbeiros" element={<BarbersPage />} />
+              <Route path="/produto/:id" element={<ProductPage />} />
+              <Route path="/carrinho" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/faq" element={<FAQPage />} />
+              <Route path="/sobre" element={<AboutPage />} />
+              <Route path="/contato" element={<ContactPage />} />
               <Route path="/404" element={<NotFound />} />
-              <Route path="/500" element={<ServerError />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

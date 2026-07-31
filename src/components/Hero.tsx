@@ -28,7 +28,7 @@ export default function Hero() {
   const opacity = useTransform(scrollY, [0, 500], [1, 0])
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative w-screen left-1/2 -translate-x-1/2 min-h-[100dvh] flex items-center justify-center overflow-hidden">
       <motion.div className="absolute inset-0" style={{ y: backgroundY }}>
         <motion.img
           initial={{ scale: 1.15 }}
