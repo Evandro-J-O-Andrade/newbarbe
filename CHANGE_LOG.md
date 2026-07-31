@@ -31,6 +31,14 @@
 - LoginPage/RegisterPage: real Supabase Auth, BackButton
 - LoadingScreen: single scissors animation
 
+### QA fixes (Sprint 1.2)
+
+- LoginPage register form: controlled inputs (value + onChange) for name, email, phone, password fields
+- PWA icons: created android-chrome-192x192.png, android-chrome-512x512.png, favicon-32x32.png, favicon-16x16.png
+- manifest.webmanifest: replaced SVG icon references with proper PNG icons
+- site.webmanifest: replaced SVG icon references with proper PNG icons
+- Favicon and PWA icons now serve correctly on production
+
 ---
 
 ## NWB-M6.5.5 — Sprint 1.1: RLS Policies & Real Supabase Auth

@@ -11,6 +11,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
   const navigate = useNavigate()
   const { login } = useAuth()
 
@@ -193,6 +195,8 @@ export default function LoginPage() {
                 <input
                   id="reg-name"
                   type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500 transition-all"
                   placeholder="Seu nome"
                   required
@@ -205,6 +209,8 @@ export default function LoginPage() {
                 <input
                   id="reg-email"
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500 transition-all"
                   placeholder="seu@email.com"
                   required
@@ -217,6 +223,8 @@ export default function LoginPage() {
                 <input
                   id="reg-whatsapp"
                   type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500 transition-all"
                   placeholder="(11) 99999-9999"
                   required
@@ -229,6 +237,8 @@ export default function LoginPage() {
                 <input
                   id="reg-password"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500 transition-all"
                   placeholder="••••••••"
                   required
