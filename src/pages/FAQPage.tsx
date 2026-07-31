@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import BackButton from '@/components/navigation/BackButton'
 
 const faqs = [
   { q: 'Precisa agendar?', a: 'Sim. Agende online ou pelo WhatsApp para garantir seu horário.' },
@@ -23,6 +24,9 @@ export default function FAQPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <div className="absolute top-4 left-4 z-50">
+        <BackButton />
+      </div>
       <section className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="text-amber-500 text-sm font-semibold tracking-widest uppercase">Perguntas Frequentes</span>
