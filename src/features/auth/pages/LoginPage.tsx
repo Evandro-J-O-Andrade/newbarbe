@@ -2,22 +2,47 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Scissors, Chrome } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/hooks/useAuth'
 
 export default function LoginPage() {
   const [mode, setMode] = useState<'login' | 'register'>('login')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const navigate = useNavigate()
+  const { login } = useAuth()
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    localStorage.setItem('nwb_role', 'CLIENTE')
-    navigate('/cliente')
+    setError('')
+    setLoading(true)
+    try {
+      await login(email, password)
+      navigate('/cliente')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro ao fazer login')
+    } finally {
+      setLoading(false)
+    }
   }
 
-  function handleGoogleLogin() {
-    localStorage.setItem('nwb_role', 'CLIENTE')
-    navigate('/cliente')
+  async function handleGoogleLogin() {
+    setError('')
+    setLoading(true)
+    try {
+      const { supabase } = await import('@/services/supabase')
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin + '/cliente',
+        },
+      })
+      if (error) throw error
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro ao login com Google')
+      setLoading(false)
+    }
   }
 
   return (
@@ -123,11 +148,15 @@ export default function LoginPage() {
 
               <button
                 type="submit"
-                disabled={!email || !password}
+                disabled={!email || !password || loading}
                 className="w-full py-3.5 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-colors disabled:opacity-40 mt-2"
               >
-                Entrar
+                {loading ? 'Entrando...' : 'Entrar'}
               </button>
+
+              {error && (
+                <p className="mt-3 text-red-400 text-sm text-center">{error}</p>
+              )}
 
               <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">

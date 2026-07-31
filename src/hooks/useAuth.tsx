@@ -17,6 +17,7 @@ interface AuthContextValue {
   user: User | null
   loading: boolean
   login: (email: string, password: string) => Promise<void>
+  register: (name: string, email: string, phone: string, password: string) => Promise<void>
   logout: () => Promise<void>
 }
 
@@ -82,6 +83,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     if (error) {
       throw new Error(error.message)
+    }
+  }
+
+  async function register(name: string, email: string, phone: string, password: string) {
+    if (!supabase) {
+      throw new Error('Supabase não configurado')
+    }
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name,
+          phone,
+        },
+      },
+    })
+
+    if (error) {
+      throw new Error(error.message)
+    }
+
+    if (data.user) {
+      await supabase.from('usuario').insert({
+        id: parseInt(data.user.id.replace(/-/g, '').slice(0, 18), 16),
+        nome: name,
+        email,
+        telefone: phone,
+        tipo: 'CLIENTE',
+      })
     }
   }
 
