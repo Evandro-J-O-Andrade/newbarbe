@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
-import { Scissors, Chrome } from 'lucide-react'
+import { Chrome } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import BackButton from '@/components/navigation/BackButton'
+import NewWaveLogo from '@/components/NewWaveLogo'
+import ScissorCut from '@/components/ScissorCut'
+import BarberPole from '@/components/BarberPole'
 
 export default function LoginPage() {
   const [mode, setMode] = useState<'login' | 'register'>('login')
@@ -15,6 +18,7 @@ export default function LoginPage() {
   const [phone, setPhone] = useState('')
   const navigate = useNavigate()
   const { login } = useAuth()
+  const formFilled = useMemo(() => email.trim().length > 0 && password.trim().length > 0, [email, password])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -79,15 +83,33 @@ export default function LoginPage() {
         transition={{ duration: 0.8, ease: 'easeOut' }}
         className="relative z-10 w-full max-w-md px-6"
       >
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-500/10 border border-amber-500/30 mb-6">
-            <Scissors className="w-8 h-8 text-amber-500" />
+          <div className="text-center mb-10">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="inline-flex items-center justify-center gap-3 bg-amber-500/10 border border-amber-500/30 rounded-full mb-6 px-4 py-2"
+            >
+              <NewWaveLogo className="w-12 h-12 text-amber-500" />
+              <span className="text-3xl font-black tracking-widest text-white">
+                NEW<span className="text-amber-500">WAVE</span>
+              </span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="flex items-center justify-center gap-2 mb-3"
+            >
+              <BarberPole className="w-10 h-10" />
+              <span className="text-amber-400 text-xl font-bold tracking-wider uppercase bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">
+                Barbearia Premium
+              </span>
+              <BarberPole className="w-10 h-10" />
+            </motion.div>
+            <p className="text-gray-500 text-xs tracking-widest uppercase">Desde 2015</p>
           </div>
-          <h1 className="text-4xl font-bold tracking-widest text-white mb-2">
-            NEW<span className="text-amber-500">WAVE</span>
-          </h1>
-          <p className="text-gray-300 text-sm tracking-wider uppercase">Barbearia Premium</p>
-        </div>
 
         <div className="bg-black/40 backdrop-blur-xl rounded-2xl border border-white/10 p-8">
           <div className="flex gap-2 mb-8 bg-white/5 rounded-xl p-1">
@@ -155,6 +177,17 @@ export default function LoginPage() {
                   Esqueci minha senha
                 </a>
               </div>
+
+              {formFilled && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <ScissorCut filled={true} />
+                </motion.div>
+              )}
 
               <button
                 type="submit"

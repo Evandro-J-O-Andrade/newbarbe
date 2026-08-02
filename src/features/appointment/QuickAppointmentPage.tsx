@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom'
 import { services, professionals, generateTimeSlots } from '@/data/appointment'
 import { generateWhatsAppLink } from '@/utils/index'
 import { env } from '@/config/env'
+import { createCalendarEvent } from '@/services/calendar'
 import type { Service, Professional, PaymentMethod } from '@/types/appointment'
 
 type Step = 'service' | 'professional' | 'date' | 'time' | 'client'
@@ -83,9 +84,29 @@ export default function QuickAppointmentPage() {
     if (prev) setStep(prev.key)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!selectedService || !selectedProfessional || !selectedDate || !selectedTime || !paymentMethod) return
     setSending(true)
+
+    const selectedSvc = services.find((s) => s.id === selectedService.id)
+    const serviceDuration = selectedSvc?.durationMinutes || 40
+    const startDateTime = new Date(selectedDate).toISOString().split('T')[0] + 'T' + selectedTime + ':00'
+    const endDate = new Date(new Date(startDateTime).getTime() + serviceDuration * 60000)
+    const endDateTime = endDate.toISOString().split('T')[0] + 'T' + endDate.toTimeString().slice(0, 5) + ':00'
+
+    try {
+      await createCalendarEvent({
+        title: `${selectedService.name} - New Wave Barber`,
+        description: `Profissional: ${selectedProfessional.name}\nNome: ${clientName}\nPagamento: ${paymentMethod}`,
+        startDate: startDateTime,
+        endDate: endDateTime,
+        location: 'New Wave Barber',
+        attendees: [clientPhone],
+      })
+    } catch (err) {
+      console.warn('Falha ao sincronizar com calendário:', err)
+    }
+
     const message = `Olá! Gostaria de confirmar um agendamento:\n\n*Profissional:* ${selectedProfessional.name}\n*Serviço:* ${selectedService.name}\n*Data:* ${selectedDate}\n*Horário:* ${selectedTime}\n*Pagamento:* ${paymentMethod}\n*Nome:* ${clientName}\n*Telefone:* ${clientPhone}`
     const whatsappUrl = generateWhatsAppLink(env.whatsappNumber, message)
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')

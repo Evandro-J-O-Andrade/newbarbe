@@ -1,13 +1,5 @@
-/**
- * Serviço de agendamento.
- *
- * Responsabilidades:
- * - Buscar profissionais, serviços e horários.
- * - Criar agendamentos no Supabase.
- * - Manter compatibilidade com dados mockados para fallback.
- */
-
 import { supabase } from './supabase'
+import { TIME_SLOTS } from '@/constants'
 import type { Service, Professional, TimeSlot } from '@/types/appointment'
 
 export async function fetchServices(): Promise<Service[]> {
@@ -44,8 +36,7 @@ export async function fetchProfessionals(): Promise<Professional[]> {
 
 export async function fetchTimeSlots(professionalId: string, date: string): Promise<TimeSlot[]> {
   if (!supabase) {
-    const allSlots = ['09:00', '09:40', '10:20', '11:00', '11:40', '13:00', '13:40', '14:20', '15:00', '15:40', '16:20', '17:00', '17:40']
-    return allSlots.map((time) => ({ time, available: true }))
+    return TIME_SLOTS.map((time) => ({ time, available: true }))
   }
 
   const { data, error } = await supabase
@@ -57,9 +48,7 @@ export async function fetchTimeSlots(professionalId: string, date: string): Prom
 
   if (error) throw error
 
-  const allSlots = ['09:00', '09:40', '10:20', '11:00', '11:40', '13:00', '13:40', '14:20', '15:00', '15:40', '16:20', '17:00', '17:40']
-
-  return allSlots.map((time) => {
+  return TIME_SLOTS.map((time) => {
     const isBooked = data.some((appointment) => {
       const start = appointment.hora_inicio
       const end = appointment.hora_fim

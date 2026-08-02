@@ -56,20 +56,50 @@ export default function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="p-8 bg-black border border-gray-800 rounded-xl"
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              whileHover={{ y: -8, rotateX: 2, transition: { duration: 0.3 } }}
+              className="p-8 bg-black border border-gray-800 rounded-xl group"
             >
-              <div className="flex gap-1 mb-4">
+              <motion.div
+                className="flex gap-1 mb-4"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + index * 0.15 }}
+              >
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-amber-500 text-amber-500" />
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 + index * 0.15 + i * 0.05 }}
+                  >
+                    <Star className="w-5 h-5 fill-amber-500 text-amber-500" />
+                  </motion.span>
                 ))}
-              </div>
-              <p className="text-gray-300 mb-6 italic leading-relaxed">"{testimonial.text}"</p>
-              <div className="font-semibold text-white">{testimonial.name}</div>
+              </motion.div>
+              <motion.p
+                className="text-gray-300 mb-6 italic leading-relaxed"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 + index * 0.15 }}
+              >
+                &ldquo;{testimonial.text}&rdquo;
+              </motion.p>
+              <motion.div
+                className="font-semibold text-white"
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.6 + index * 0.15 }}
+              >
+                {testimonial.name}
+              </motion.div>
             </motion.div>
           ))}
         </div>

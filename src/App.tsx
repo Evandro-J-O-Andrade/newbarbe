@@ -40,6 +40,7 @@ import BarbersPage from '@/pages/BarbersPage'
 import ProductPage from '@/pages/ProductPage'
 import CartPage from '@/pages/CartPage'
 import CheckoutPage from '@/pages/CheckoutPage'
+import CalendarCallback from '@/pages/CalendarCallback'
 import BottomNavigation from '@/components/navigation/BottomNavigation'
 import FloatingActionButton from '@/components/navigation/FloatingActionButton'
 import { AuthProvider } from '@/hooks/useAuth'
@@ -246,6 +247,7 @@ function App() {
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/sobre" element={<AboutPage />} />
               <Route path="/contato" element={<ContactPage />} />
+              <Route path="/auth/callback" element={<CalendarCallback />} />
               <Route path="/404" element={<NotFound />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

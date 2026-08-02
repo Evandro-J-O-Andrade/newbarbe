@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Scissors, Chrome } from 'lucide-react'
+import { Chrome } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import BackButton from '@/components/navigation/BackButton'
+import NewWaveLogo from '@/components/NewWaveLogo'
 
 export default function RegisterPage() {
   const [name, setName] = useState('')
@@ -78,10 +79,10 @@ export default function RegisterPage() {
         transition={{ duration: 0.8, ease: 'easeOut' }}
         className="relative z-10 w-full max-w-md px-6"
       >
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-500/10 border border-amber-500/30 mb-6">
-            <Scissors className="w-8 h-8 text-amber-500" />
-          </div>
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-amber-500/10 border border-amber-500/30 mb-6">
+              <NewWaveLogo className="w-14 h-14 text-amber-500" />
+            </div>
           <h1 className="text-4xl font-bold tracking-widest text-white mb-2">
             NEW<span className="text-amber-500">WAVE</span>
           </h1>

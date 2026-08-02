@@ -1,11 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
-  <rect width="192" height="192" rx="32" fill="#000000"/>
-  <rect width="192" height="192" rx="32" fill="url(#grad)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" fill="none">
   <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="skullGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#f59e0b"/>
-      <stop offset="100%" style="stop-color:#d97706"/>
+      <stop offset="50%" style="stop-color:#d97706"/>
+      <stop offset="100%" style="stop-color:#f59e0b"/>
     </linearGradient>
+    <filter id="skullGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
-  <text x="96" y="130" font-size="80" text-anchor="middle" fill="#000000" font-weight="bold">✂</text>
+
+  <rect width="192" height="192" rx="36" fill="#000000"/>
+
+  <g transform="translate(48, 30) scale(1.4)" filter="url(#skullGlow)">
+
+    <path d="M60 0 C85 0 100 15 100 35 C100 45 95 55 85 60 C90 70 90 80 85 90 C80 100 70 105 60 105 C50 105 40 100 35 90 C30 80 30 70 35 60 C25 55 20 45 20 35 C20 15 35 0 60 0 Z" fill="url(#skullGrad)" stroke="#d97706" stroke-width="2"/>
+
+    <circle cx="48" cy="38" r="7" fill="#000"/>
+    <circle cx="72" cy="38" r="7" fill="#000"/>
+    <circle cx="48" cy="38" r="3" fill="#fff"/>
+    <circle cx="72" cy="38" r="3" fill="#fff"/>
+
+    <path d="M55 55 C60 60 65 60 70 55" stroke="#000" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+    <path d="M35 70 C20 85 10 105 15 125 C20 140 35 150 55 150 C75 150 90 140 95 125 C100 105 90 85 85 70 C80 72 75 74 70 74 C65 74 60 72 55 70 Z" fill="url(#skullGrad)" stroke="#d97706" stroke-width="1.5"/>
+
+    <path d="M30 100
+             C22 110 18 122 22 132
+             C26 142 35 150 45 150
+             C38 145 35 138 35 130
+             C35 122 38 115 42 110 Z" fill="#000"/>
+
+    <path d="M90 100
+             C98 110 102 122 98 132
+             C94 142 85 150 75 150
+             C82 145 85 138 85 130
+             C85 122 82 115 78 110 Z" fill="#000"/>
+
+    <path d="M40 120
+             C35 125 30 135 35 142
+             C40 150 50 155 58 152
+             C62 150 65 146 65 140
+             C65 135 60 130 55 128 Z" fill="#000" transform="scale(0.8) translate(0,0)" opacity="0.7"/>
+
+    <path d="M75 120
+             C80 125 85 135 80 142
+             C75 150 65 155 57 152 Z" fill="#000" opacity="0.7"/>
+  </g>
+
+  <path d="M48 120 C42 130 38 142 42 152 C46 162 58 168 70 168 C82 168 94 162 98 152 C102 142 98 130 90 122 C80 124 70 126 60 122 Z" fill="#000" transform="translate(50, 60) scale(0.8)" opacity="0.8"/>
+
+  <circle cx="62" cy="118" r="3" fill="#d97706"/>
+  <circle cx="82" cy="118" r="3" fill="#d97706"/>
+
+  <path d="M35 60 C25 65 18 75 20 88 C22 100 32 108 42 108 C38 105 35 100 35 95 C35 88 38 82 42 78" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round"/>
+
+  <path d="M105 60 C115 65 122 75 120 88 C118 100 108 108 98 108 C102 105 105 100 105 95 C105 88 102 82 98 78" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round"/>
 </svg>

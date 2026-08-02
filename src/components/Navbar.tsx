@@ -16,8 +16,9 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Scissors } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import NewWaveLogo from './NewWaveLogo'
 
 const navLinks = [
   { href: '#sobre', label: 'Sobre' },
@@ -67,9 +68,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-24">
           <a href="#" className="flex items-center gap-3 group">
-            <div className="relative">
-              <Scissors className="w-8 h-8 text-amber-500 group-hover:rotate-45 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-amber-500/20 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative flex items-center justify-center w-10 h-10">
+              <NewWaveLogo className="w-10 h-10 text-amber-500 group-hover:scale-110 transition-transform duration-500" />
             </div>
             <span className="text-2xl font-bold tracking-widest text-white">
               NEW<span className="text-amber-500">WAVE</span>

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useState, useEffect } from 'react'
 
 interface ResponsiveProps {
   children: ReactNode
@@ -7,18 +7,26 @@ interface ResponsiveProps {
   desktop?: ReactNode
 }
 
+const MOBILE_MAX = 768
+const TABLET_MAX = 1024
+
 export default function Responsive({
   children,
   mobile,
   tablet,
   desktop,
 }: ResponsiveProps) {
-  if (typeof window === 'undefined') return <>{children}</>
+  const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0)
 
-  const width = window.innerWidth
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const handleResize = () => setWidth(window.innerWidth)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
-  if (width < 768 && mobile) return <>{mobile}</>
-  if (width < 1024 && tablet) return <>{tablet}</>
+  if (width < MOBILE_MAX && mobile) return <>{mobile}</>
+  if (width < TABLET_MAX && tablet) return <>{tablet}</>
   if (desktop) return <>{desktop}</>
 
   return <>{children}</>

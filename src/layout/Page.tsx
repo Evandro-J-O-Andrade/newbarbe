@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { Helmet } from 'react-helmet-async'
 import Container from './Container'
 
 interface PageProps {
@@ -15,7 +16,9 @@ export default function Page({
   return (
     <div className={`min-h-screen bg-black text-white ${className}`}>
       {title && (
-        <title>{title} | New Wave Barber</title>
+        <Helmet>
+          <title>{title} | New Wave Barber</title>
+        </Helmet>
       )}
       <main className="w-full">
         <Container>

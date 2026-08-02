@@ -29,6 +29,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Check, MessageCircle, Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { fetchServices, fetchProfessionals, fetchTimeSlots } from '@/services/appointment'
+import { createCalendarEvent } from '@/services/calendar'
 import { services as mockServices, professionals as mockProfessionals, generateTimeSlots } from '@/data/appointment'
 import { env } from '@/config/env'
 import { generateWhatsAppLink, formatCurrency, formatDate } from '@/utils/index'
@@ -166,7 +167,7 @@ export default function AppointmentWizard() {
     if (prev) setStep(prev.key)
   }
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     const appointment = {
       clientName: data.clientName,
       professionalName: selectedProfessional!.name,
@@ -177,6 +178,24 @@ export default function AppointmentWizard() {
       chair: 'Cadeira 02',
     }
     addAppointment(appointment)
+
+    const startDateTime = new Date(selectedDate).toISOString().split('T')[0] + 'T' + selectedTime + ':00'
+    const endDate = new Date(new Date(startDateTime).getTime() + selectedService!.durationMinutes * 60000)
+    const endDateTime = endDate.toISOString().split('T')[0] + 'T' + endDate.toTimeString().slice(0, 5) + ':00'
+
+    try {
+      await createCalendarEvent({
+        title: `${selectedService!.name} - New Wave Barber`,
+        description: `Profissional: ${selectedProfessional!.name}\nCliente: ${data.clientName}\nPagamento: ${paymentMethod}`,
+        startDate: startDateTime,
+        endDate: endDateTime,
+        location: 'New Wave Barber',
+        attendees: [data.clientPhone],
+      })
+    } catch (err) {
+      console.warn('Falha ao sincronizar com calendário:', err)
+    }
+
     const message = `Olá! Gostaria de confirmar um agendamento:\n\n*Profissional:* ${selectedProfessional!.name}\n*Serviço:* ${selectedService!.name}\n*Data:* ${formatDate(selectedDate)}\n*Horário:* ${selectedTime}\n*Pagamento:* ${paymentMethod}\n*Nome:* ${data.clientName}\n*Telefone:* ${data.clientPhone}\n${hasCompanion ? '*Acompanhante:* Sim\n' : ''}${isFirstTime ? '*Primeira vez:* Sim\n' : ''}${data.note ? `*Obs:* ${data.note}` : ''}`
     const whatsappUrl = generateWhatsAppLink(env.whatsappNumber, message)
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')

@@ -11,10 +11,10 @@
  *
  * Dependências:
  * - react-helmet-async
- * - lucide-react
  */
 
 import { Helmet } from 'react-helmet-async'
+import { env } from '@/config/env'
 
 interface SEOHeadProps {
   title?: string
@@ -26,19 +26,17 @@ interface SEOHeadProps {
   noindex?: boolean
 }
 
-const SITE_URL = 'https://newbarbestudio.netlify.app'
-
 export default function SEOHead({
   title = 'New Wave Barber — Cortes Masculinos Premium',
   description = 'Experiência premium em cortes masculinos. Onde tradição encontra modernidade.',
   keywords = ['barbearia', 'corte masculino', 'barba', 'barbeiro', 'premium'],
   canonical,
-  ogImage = `${SITE_URL}/og-image.jpg`,
+  ogImage = `${env.siteUrl}/og-image.jpg`,
   ogType = 'website',
   noindex = false,
 }: SEOHeadProps) {
   const fullTitle = title === 'New Wave Barber — Cortes Masculinos Premium' ? title : `${title} | New Wave Barber`
-  const canonicalUrl = canonical || SITE_URL
+  const canonicalUrl = canonical || env.siteUrl
   const robots = noindex ? 'noindex, nofollow' : 'index, follow'
 
   return (

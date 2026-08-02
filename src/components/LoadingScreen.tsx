@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Scissors } from 'lucide-react'
+import NewWaveLogo from '@/components/NewWaveLogo'
 
 export default function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true)
@@ -35,24 +35,24 @@ export default function LoadingScreen() {
           transition={{ duration: 0.5, ease: 'easeInOut' }}
           className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black"
         >
-          <motion.div
-            initial={{ x: '-100vw', opacity: 0 }}
-            animate={{ x: '0%', opacity: 1 }}
-            transition={{ duration: 0.8, ease: 'easeInOut' }}
-            className="relative flex flex-col items-center justify-center"
-          >
-            <Scissors className="w-20 h-20 text-amber-500" />
-            <div className="absolute inset-0 bg-amber-500/20 blur-3xl rounded-full" />
-          </motion.div>
+            <motion.div
+              initial={{ x: '-100vw', opacity: 0 }}
+              animate={{ x: '0%', opacity: 1 }}
+              transition={{ duration: 0.8, ease: 'easeInOut' }}
+              className="relative flex flex-col items-center justify-center"
+            >
+              <NewWaveLogo className="w-24 h-24 text-amber-500" />
+              <div className="absolute inset-0 bg-amber-500/20 blur-3xl rounded-full" />
+            </motion.div>
 
-          <motion.div
-            initial={{ scale: 1 }}
-            animate={{ scale: [1, 1.15, 1] }}
-            transition={{ duration: 0.6, repeat: Infinity }}
-            className="relative flex items-center justify-center mt-8"
-          >
-            <Scissors className="w-16 h-16 text-amber-500" />
-            <div className="absolute inset-0 bg-amber-500/30 blur-3xl rounded-full animate-pulse" />
+            <motion.div
+              initial={{ scale: 1 }}
+              animate={{ scale: [1, 1.15, 1] }}
+              transition={{ duration: 0.6, repeat: Infinity }}
+              className="relative flex items-center justify-center mt-8"
+            >
+              <NewWaveLogo className="w-20 h-20 text-amber-500" />
+              <div className="absolute inset-0 bg-amber-500/30 blur-3xl rounded-full animate-pulse" />
             <motion.div
               className="absolute inset-0 bg-amber-400/40 blur-xl rounded-full"
               animate={{
@@ -69,7 +69,7 @@ export default function LoadingScreen() {
             className="text-center mt-10"
           >
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-500/10 border border-amber-500/30 mb-4">
-              <Scissors className="w-8 h-8 text-amber-500" />
+              <NewWaveLogo className="w-10 h-10 text-amber-500" />
             </div>
             <div className="w-64 space-y-3">
               <div className="h-px w-full bg-gray-800 overflow-hidden">

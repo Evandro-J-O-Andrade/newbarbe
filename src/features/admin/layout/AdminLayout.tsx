@@ -13,6 +13,7 @@
 import { useState, useEffect } from 'react'
 import AdminSidebar from './AdminSidebar'
 import AdminHeader from './AdminHeader'
+import BottomNavigation from '@/components/navigation/BottomNavigation'
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -35,10 +36,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="flex">
         <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-        <main className="flex-1 p-4 md:p-8 lg:ml-64">
+        <main className="flex-1 p-4 md:p-8 lg:ml-64 pb-20 md:pb-8">
           {children}
         </main>
       </div>
+
+      <BottomNavigation />
 
       {sidebarOpen && (
         <div

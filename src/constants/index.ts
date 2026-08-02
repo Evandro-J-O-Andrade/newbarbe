@@ -21,3 +21,8 @@ export const ANIMATION_DURATION = {
   normal: 0.5,
   slow: 0.8,
 } as const
+
+export const TIME_SLOTS = [
+  '09:00', '09:40', '10:20', '11:00', '11:40', '13:00', '13:40', '14:20',
+  '15:00', '15:40', '16:20', '17:00', '17:40',
+] as const

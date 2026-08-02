@@ -13,8 +13,9 @@
  * - Lucide React
  */
 
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { Users, Award, Clock } from 'lucide-react'
+import NewWaveLogo from './NewWaveLogo'
 
 const stats = [
   { icon: Users, value: '5.000+', label: 'Clientes Satisfeitos' },
@@ -23,6 +24,9 @@ const stats = [
 ]
 
 export default function About() {
+  const { scrollY } = useScroll()
+  const floatY = useTransform(scrollY, [0, 500], [0, -20])
+
   return (
     <section id="sobre" className="py-24 bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -74,9 +78,12 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="relative aspect-square bg-gradient-to-br from-amber-500/20 to-transparent rounded-2xl flex items-center justify-center border border-amber-500/20">
-              <div className="text-[180px] leading-none select-none">💈</div>
-            </div>
+             <motion.div
+               style={{ y: floatY }}
+               className="relative aspect-square bg-gradient-to-br from-amber-500/20 to-transparent rounded-2xl flex items-center justify-center border border-amber-500/20"
+             >
+               <NewWaveLogo className="w-48 h-48 text-amber-500" />
+             </motion.div>
             <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-amber-500/10 rounded-2xl -z-10" />
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-amber-500/5 rounded-2xl -z-10" />
           </motion.div>

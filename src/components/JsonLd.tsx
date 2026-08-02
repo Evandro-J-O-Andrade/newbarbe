@@ -12,14 +12,15 @@
  */
 
 import { Helmet } from 'react-helmet-async'
+import { env } from '@/config/env'
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Barbershop',
   name: 'New Wave Barber',
   description: 'Experiência premium em cortes masculinos.',
-  url: 'https://newbarbestudio.netlify.app',
-  telephone: '+55-11-99999-9999',
+  url: env.siteUrl,
+  telephone: env.whatsappNumber,
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Av. Paulista, 1000',
